@@ -11,6 +11,24 @@ class UserList extends ConsumerStatefulWidget {
 class _UserListState extends ConsumerState<UserList> {
   @override
   Widget build(BuildContext context) {
-    return Text("user");
+    return DataTable(
+      columns: const [
+        DataColumn(
+          label: Expanded(
+            child: Text(
+              'Name',
+              style: TextStyle(fontStyle: FontStyle.italic),
+            ),
+          ),
+        ),
+      ],
+      rows: const [
+        DataRow(
+          cells: [
+            DataCell(Text('Alex')),
+          ],
+        ),
+      ],
+    );
   }
 }

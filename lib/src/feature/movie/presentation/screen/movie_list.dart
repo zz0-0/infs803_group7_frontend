@@ -15,7 +15,10 @@ class _MovieListState extends ConsumerState<MovieList> {
       appBar: AppBar(
         title: const Text("Movie"),
       ),
-      body: const Expanded(child: Text("Movie List")),
+      body: GridView.count(
+        crossAxisCount: 2,
+        children: [],
+      ),
     );
   }
 }
