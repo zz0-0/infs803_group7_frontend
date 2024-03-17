@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:infs803_group7_frontend/src/feature/movie/presentation/screen/movie_list.dart';
 import 'package:infs803_group7_frontend/src/feature/user/presentation/screen/user_login.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool loggedIn = true;
+  final index = 1;
 
   // This widget is the root of your application.
   @override
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: UserLogin(),
+      home: loggedIn ? const MovieList() : const UserLogin(),
     );
   }
 }

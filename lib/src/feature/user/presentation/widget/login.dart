@@ -20,7 +20,16 @@ class _LoginState extends ConsumerState<Login> {
           TextFormField(
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter some text';
+                return 'Please enter your username';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            obscureText: true,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your password';
               }
               return null;
             },
