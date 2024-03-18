@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 
 class MovieList extends ConsumerStatefulWidget {
   const MovieList({super.key});
@@ -20,5 +21,9 @@ class _MovieListState extends ConsumerState<MovieList> {
         children: [],
       ),
     );
+  }
+
+  Future<http.Response> fetchMovies() {
+    return http.get(Uri.parse("https://abc.com/movies"));
   }
 }

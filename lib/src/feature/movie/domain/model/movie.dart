@@ -1,29 +1,27 @@
-class User {
+class Movie {
   int id;
   String name;
-  int level;
   DateTime? createdAt;
   DateTime? updatedAt;
 
-  User({
+  Movie({
     required this.id,
     required this.name,
-    this.level = 1,
     this.createdAt,
     this.updatedAt,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) {
+  factory Movie.fromJson(Map<String, dynamic> json) {
     return switch (json) {
       {
         'id': final int id,
         'name': final String name,
       } =>
-        User(
+        Movie(
           id: id,
           name: name,
         ),
-      _ => throw const FormatException("Failed to load User"),
+      _ => throw const FormatException("Failed to load Movie"),
     };
   }
 }
