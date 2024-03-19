@@ -10,24 +10,26 @@ class UserInfo extends ConsumerStatefulWidget {
 }
 
 class _UserInfoState extends ConsumerState<UserInfo> {
+  String url = "https://abc.com/api/user/";
+
   @override
   Widget build(BuildContext context) {
     return Container();
   }
 
-  Future<http.Response> createUser() {
-    return http.post(Uri.parse("https://abc.com/user/1"));
+  Future<http.Response> createUser(Map data) {
+    return http.post(Uri.parse(url), body: data);
   }
 
-  Future<http.Response> fetchUser() {
-    return http.get(Uri.parse("https://abc.com/user/1"));
+  Future<http.Response> fetchUser(int userId) {
+    return http.get(Uri.parse("$url$userId"));
   }
 
-  Future<http.Response> updateUser() {
-    return http.post(Uri.parse("https://abc.com/user/1"));
+  Future<http.Response> updateUser(int userId, Map data) {
+    return http.post(Uri.parse("$url$userId"), body: data);
   }
 
-  Future<http.Response> deleteUser() {
-    return http.delete(Uri.parse("https://abc.com/user/1"));
+  Future<http.Response> deleteUser(int userId) {
+    return http.delete(Uri.parse("$url$userId"));
   }
 }
