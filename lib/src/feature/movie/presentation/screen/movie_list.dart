@@ -13,7 +13,7 @@ class MovieList extends ConsumerStatefulWidget {
 }
 
 class _MovieListState extends ConsumerState<MovieList> {
-  String url = "https://abc.com/api/movies/";
+  String url = "https://127.0.0.1:3000/api/movies/";
   List<Movie> movies = [];
   @override
   Widget build(BuildContext context) {

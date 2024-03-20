@@ -13,7 +13,7 @@ class UserList extends ConsumerStatefulWidget {
 }
 
 class _UserListState extends ConsumerState<UserList> {
-  String url = "https://abc.com/api/users/";
+  String url = "https://127.0.0.1:3000/api/users/";
   List<User> users = [];
 
   @override
@@ -23,19 +23,56 @@ class _UserListState extends ConsumerState<UserList> {
         DataColumn(
           label: Expanded(
             child: Text(
+              'ID',
+              style: TextStyle(fontStyle: FontStyle.italic),
+            ),
+          ),
+        ),
+        DataColumn(
+          label: Expanded(
+            child: Text(
               'Name',
               style: TextStyle(fontStyle: FontStyle.italic),
             ),
           ),
         ),
-      ],
-      rows: const [
-        DataRow(
-          cells: [
-            DataCell(Text('Alex')),
-          ],
+        DataColumn(
+          label: Expanded(
+            child: Text(
+              'Created At',
+              style: TextStyle(fontStyle: FontStyle.italic),
+            ),
+          ),
+        ),
+        DataColumn(
+          label: Expanded(
+            child: Text(
+              'Updated At',
+              style: TextStyle(fontStyle: FontStyle.italic),
+            ),
+          ),
         ),
       ],
+      rows: users
+          .map(
+            (e) => DataRow(
+              cells: [
+                DataCell(
+                  Text(e.id as String),
+                ),
+                DataCell(
+                  Text(e.name),
+                ),
+                DataCell(
+                  Text(e.createdAt! as String),
+                ),
+                DataCell(
+                  Text(e.updatedAt! as String),
+                ),
+              ],
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -43,7 +80,7 @@ class _UserListState extends ConsumerState<UserList> {
     final result = await http.get(Uri.parse(url));
     if (result.statusCode == 200) {
       final data = jsonDecode(result.body);
-      data['user'].forEach(
+      data['users'].forEach(
         (value) => users
             .add(User(id: value["id"] as int, name: value["name"] as String)),
       );

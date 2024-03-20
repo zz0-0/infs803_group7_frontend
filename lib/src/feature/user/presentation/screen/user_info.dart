@@ -10,7 +10,7 @@ class UserInfo extends ConsumerStatefulWidget {
 }
 
 class _UserInfoState extends ConsumerState<UserInfo> {
-  String url = "https://abc.com/api/user/";
+  String url = "https://127.0.0.1:3000/api/users/";
 
   @override
   Widget build(BuildContext context) {

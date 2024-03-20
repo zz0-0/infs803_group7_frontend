@@ -18,10 +18,14 @@ class User {
       {
         'id': final int id,
         'name': final String name,
+        'created_at': final DateTime createdAt,
+        'updated_at': final DateTime updatedAt,
       } =>
         User(
           id: id,
           name: name,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
         ),
       _ => throw const FormatException("Failed to load User"),
     };
