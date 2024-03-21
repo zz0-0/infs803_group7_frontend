@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         "/login": (BuildContext context) => const UserLogin(),
         "/signup": (BuildContext context) => const UserLogin(),
       },
-      home: loggedIn ? const MovieList() : const UserLogin(),
+      home: loggedIn ? const UserList() : const UserLogin(),
     );
   }
 }

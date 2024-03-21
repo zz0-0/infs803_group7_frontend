@@ -12,21 +12,12 @@ class Movie {
   });
 
   factory Movie.fromJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {
-        'id': final int id,
-        'name': final String name,
-        'created_at': final DateTime createdAt,
-        'updated_at': final DateTime updatedAt,
-      } =>
-        Movie(
-          id: id,
-          name: name,
-          createdAt: createdAt,
-          updatedAt: updatedAt,
-        ),
-      _ => throw const FormatException("Failed to load Movie"),
-    };
+    return Movie(
+      id: json["id"] as int,
+      name: json["name"] as String,
+      createdAt: json["createdAt"] as DateTime,
+      updatedAt: json["updatedAt"] as DateTime,
+    );
   }
 
   // factory Movie.toJson(Movie movie) {}

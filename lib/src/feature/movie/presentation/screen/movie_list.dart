@@ -28,15 +28,16 @@ class _MovieListState extends ConsumerState<MovieList> {
     );
   }
 
-  Future<http.Response> fetchUsers() async {
+  Future<List<Movie>> fetchMovies() async {
     final result = await http.get(Uri.parse(url));
+    final List<Movie> movies = [];
     if (result.statusCode == 200) {
-      final data = jsonDecode(result.body);
-      data['movie'].forEach(
-        (value) => movies
-            .add(Movie(id: value["id"] as int, name: value["name"] as String)),
-      );
+      final data = json.decode(result.body);
+      final List dataList = data["movies"] as List;
+      return dataList
+          .map((e) => Movie.fromJson(e as Map<String, dynamic>))
+          .toList();
     }
-    return result;
+    return movies;
   }
 }
