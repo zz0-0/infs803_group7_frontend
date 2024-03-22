@@ -18,8 +18,13 @@ class User {
       id: json["id"] as int,
       name: json["name"] as String,
       level: json["level"] as int,
-      createdAt: json["createdAt"] as DateTime,
-      updatedAt: json["updatedAt"] as DateTime,
+      createdAt: DateTime.fromMicrosecondsSinceEpoch(json["created_at"] as int),
+      updatedAt: DateTime.fromMicrosecondsSinceEpoch(json["updated_at"] as int),
     );
+  }
+
+  @override
+  String toString() {
+    return "$id, $name, $level, $createdAt, $updatedAt";
   }
 }

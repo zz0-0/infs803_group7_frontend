@@ -15,11 +15,17 @@ class UserList extends ConsumerStatefulWidget {
 
 class _UserListState extends ConsumerState<UserList> {
   String url = "localhost:3000";
+  late final Future<List<User>> users;
+  @override
+  void initState() {
+    super.initState();
+    users = fetchUsers();
+  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<User>>(
-      future: fetchUsers(),
+      future: users,
       builder: (BuildContext context, AsyncSnapshot<List<User>> snapshot) {
         if (!snapshot.hasData) {
           return Container();
@@ -33,13 +39,11 @@ class _UserListState extends ConsumerState<UserList> {
   Future<List<User>> fetchUsers() async {
     final result = await http.get(Uri.http(url, 'api/users'));
 
-    final List<User> users = [];
-    // if (result.statusCode == 200) {
-    final data = json.decode(result.body) as List;
-    // final List dataList = data["users"] as List;
-    return data.map((e) => User.fromJson(e as Map<String, dynamic>)).toList();
-    // }
-
-    // return users;
+    if (result.statusCode == 200) {
+      final data = await json.decode(result.body) as List;
+      return data.map((e) => User.fromJson(e as Map<String, dynamic>)).toList();
+    } else {
+      return [];
+    }
   }
 }

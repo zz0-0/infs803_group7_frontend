@@ -34,6 +34,14 @@ class Data extends ConsumerWidget {
           DataColumn(
             label: Expanded(
               child: Text(
+                'Level',
+                style: TextStyle(fontStyle: FontStyle.italic),
+              ),
+            ),
+          ),
+          DataColumn(
+            label: Expanded(
+              child: Text(
                 'Created At',
                 style: TextStyle(fontStyle: FontStyle.italic),
               ),
@@ -53,16 +61,19 @@ class Data extends ConsumerWidget {
               (e) => DataRow(
                 cells: [
                   DataCell(
-                    Text(e.id as String),
+                    Text(e.id.toString()),
                   ),
                   DataCell(
                     Text(e.name),
                   ),
                   DataCell(
-                    Text(e.createdAt! as String),
+                    Text(e.level.toString()),
                   ),
                   DataCell(
-                    Text(e.updatedAt! as String),
+                    Text(e.createdAt!.toString()),
+                  ),
+                  DataCell(
+                    Text(e.updatedAt!.toString()),
                   ),
                 ],
               ),
