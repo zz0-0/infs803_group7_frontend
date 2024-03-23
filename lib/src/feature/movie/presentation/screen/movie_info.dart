@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:infs803_group7_frontend/src/feature/movie/domain/model/movie.dart';
 
 class MovieInfo extends ConsumerStatefulWidget {
   const MovieInfo({super.key});
@@ -17,7 +18,7 @@ class _MovieInfoState extends ConsumerState<MovieInfo> {
     return Container();
   }
 
-  Future<http.Response> createMovie(Map data) {
+  Future<http.Response> createMovie(Movie data) {
     return http.post(Uri.parse(url), body: data);
   }
 
@@ -25,7 +26,7 @@ class _MovieInfoState extends ConsumerState<MovieInfo> {
     return http.get(Uri.parse("$url$movieId"));
   }
 
-  Future<http.Response> updateMovie(int movieId, Map data) {
+  Future<http.Response> updateMovie(int movieId, Movie data) {
     return http.post(Uri.parse("$url$movieId"), body: data);
   }
 

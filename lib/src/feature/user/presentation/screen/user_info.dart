@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:infs803_group7_frontend/src/feature/user/domain/model/user.dart';
 
 class UserInfo extends ConsumerStatefulWidget {
   const UserInfo({super.key});
@@ -17,7 +18,7 @@ class _UserInfoState extends ConsumerState<UserInfo> {
     return Container();
   }
 
-  Future<http.Response> createUser(Map data) {
+  Future<http.Response> createUser(User data) {
     return http.post(Uri.parse(url), body: data);
   }
 
@@ -25,7 +26,7 @@ class _UserInfoState extends ConsumerState<UserInfo> {
     return http.get(Uri.parse("$url$userId"));
   }
 
-  Future<http.Response> updateUser(int userId, Map data) {
+  Future<http.Response> updateUser(int userId, User data) {
     return http.post(Uri.parse("$url$userId"), body: data);
   }
 
