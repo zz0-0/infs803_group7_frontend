@@ -18,8 +18,12 @@ class User {
       id: json["id"] as int,
       name: json["name"] as String,
       level: json["level"] as int,
-      createdAt: DateTime.fromMicrosecondsSinceEpoch(json["created_at"] as int),
-      updatedAt: DateTime.fromMicrosecondsSinceEpoch(json["updated_at"] as int),
+      createdAt: DateTime.fromMicrosecondsSinceEpoch(
+        int.parse(json["created_at"] as String),
+      ),
+      updatedAt: DateTime.fromMicrosecondsSinceEpoch(
+        int.parse(json["updated_at"] as String),
+      ),
     );
   }
 

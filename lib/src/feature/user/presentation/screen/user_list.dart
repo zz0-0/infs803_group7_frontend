@@ -40,8 +40,12 @@ class _UserListState extends ConsumerState<UserList> {
     final result = await http.get(Uri.http(url, 'api/users'));
 
     if (result.statusCode == 200) {
-      final data = await json.decode(result.body) as List;
-      return data.map((e) => User.fromJson(e as Map<String, dynamic>)).toList();
+      final data = await json.decode(result.body);
+      final userList = data["users"] as List;
+
+      return userList
+          .map((e) => User.fromJson(e as Map<String, dynamic>))
+          .toList();
     } else {
       return [];
     }
