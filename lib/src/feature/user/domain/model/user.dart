@@ -27,6 +27,14 @@ class User {
     );
   }
 
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "level": level,
+        "created_at": createdAt!.toUtc().millisecondsSinceEpoch,
+        "updated_at": updatedAt!.toUtc().millisecondsSinceEpoch,
+      };
+
   @override
   String toString() {
     return "$id, $name, $level, $createdAt, $updatedAt";

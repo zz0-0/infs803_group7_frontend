@@ -19,7 +19,7 @@ class _UserInfoState extends ConsumerState<UserInfo> {
   }
 
   Future<http.Response> createUser(User data) {
-    return http.post(Uri.parse(url), body: data);
+    return http.post(Uri.parse(url), body: data.toJson());
   }
 
   Future<http.Response> fetchUser(int userId) {
@@ -27,7 +27,7 @@ class _UserInfoState extends ConsumerState<UserInfo> {
   }
 
   Future<http.Response> updateUser(int userId, User data) {
-    return http.post(Uri.parse("$url$userId"), body: data);
+    return http.post(Uri.parse("$url$userId"), body: data.toJson());
   }
 
   Future<http.Response> deleteUser(int userId) {
