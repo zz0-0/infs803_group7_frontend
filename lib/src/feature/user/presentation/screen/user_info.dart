@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:infs803_group7_frontend/main.dart';
 import 'package:infs803_group7_frontend/src/feature/user/domain/model/user.dart';
 
 class UserInfo extends ConsumerStatefulWidget {
@@ -11,8 +12,6 @@ class UserInfo extends ConsumerStatefulWidget {
 }
 
 class _UserInfoState extends ConsumerState<UserInfo> {
-  String url = "https://127.0.0.1:3000/api/users/";
-
   @override
   Widget build(BuildContext context) {
     return Container();

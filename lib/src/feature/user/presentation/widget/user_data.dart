@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infs803_group7_frontend/src/feature/user/domain/model/user.dart';
 
-class Data extends ConsumerWidget {
-  const Data({
+class UserData extends ConsumerWidget {
+  const UserData({
     super.key,
     required this.data,
   });

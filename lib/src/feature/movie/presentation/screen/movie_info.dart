@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:infs803_group7_frontend/main.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/domain/model/movie.dart';
 
 class MovieInfo extends ConsumerStatefulWidget {
@@ -11,8 +12,6 @@ class MovieInfo extends ConsumerStatefulWidget {
 }
 
 class _MovieInfoState extends ConsumerState<MovieInfo> {
-  String url = "https://127.0.0.1:3000/api/movie/";
-
   @override
   Widget build(BuildContext context) {
     return Container();
