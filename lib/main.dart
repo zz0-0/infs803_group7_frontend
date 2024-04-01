@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:infs803_group7_frontend/src/feature/user/presentation/screen/user_list.dart';
+import 'package:infs803_group7_frontend/src/feature/token/domain/model/token_manager.dart';
+
 import 'package:infs803_group7_frontend/src/feature/user/presentation/screen/user_login.dart';
 
 void main() {
@@ -10,15 +8,9 @@ void main() {
 }
 
 const String url = "localhost:3000";
-var storage = FlutterSecureStorage();
+final TokenManager tokenManager = TokenManager();
 
 class MyApp extends StatelessWidget {
-  Future<String> get jwt async {
-    final jwt = await storage.read(key: "jwt");
-    if (jwt == null) return "";
-    return jwt;
-  }
-
   final bool loggedIn = true;
 
   // This widget is the root of your application.
@@ -36,26 +28,17 @@ class MyApp extends StatelessWidget {
         "/login": (BuildContext context) => const UserLogin(),
         "/signup": (BuildContext context) => const UserLogin(),
       },
-      home: FutureBuilder(
-        future: jwt,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final str = snapshot.data;
-            final jwt = str!.split(".");
-            final payload = json
-                .decode(ascii.decode(base64.decode(base64.normalize(jwt[1]))));
-            if (DateTime.fromMillisecondsSinceEpoch(
-              int.parse(payload["exp"] as String) * 1000,
-            ).isAfter(DateTime.now())) {
-              return UserList(jwt as String, payload as Map<String, dynamic>);
-            } else {
-              return UserLogin();
-            }
-          } else {
-            return UserLogin();
-          }
-        },
-      ),
+      // home: FutureBuilder(
+      //   future: token,
+      //   builder: (context, snapshot) {
+      //     if (snapshot.hasData) {
+      //       final token = snapshot.data;
+      //       return UserList(token: token!);
+      //     } else {
+      //       return const UserLogin();
+      //     }
+      //   },
+      // ),
     );
   }
 }

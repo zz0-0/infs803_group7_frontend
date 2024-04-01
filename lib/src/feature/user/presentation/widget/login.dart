@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:infs803_group7_frontend/main.dart';
+
 import 'package:infs803_group7_frontend/src/feature/user/presentation/screen/user_list.dart';
 
 class Login extends ConsumerStatefulWidget {
@@ -49,15 +50,15 @@ class _LoginState extends ConsumerState<Login> {
             onPressed: () async {
               if (key.currentState!.validate()) {
                 // call backend
-                final jwt = await attempLogin(
+                await attempLogin(
                   usernameController.text,
                   passwordController.text,
                 );
-                storage.write(key: "jwt", value: jwt);
+
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => UserList.fromBase64(jwt),
+                    builder: (context) => UserList(),
                   ),
                 );
               }
@@ -72,12 +73,19 @@ class _LoginState extends ConsumerState<Login> {
   Future<String> attempLogin(String username, String password) async {
     final result = await http.post(
       Uri.http(url, 'api/login'),
-      body: {"username": username, "password": password},
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: json.encode({"username": username, "password": password}),
     );
 
     if (result.statusCode == 200) {
-      final data = await json.decode(result.body);
-      return "";
+      final data = await json.decode(result.body) as Map<String, dynamic>;
+      final String token = data['token'].toString();
+      final String refreshToken = data['refresh_token'].toString();
+      final int expiresIn = int.parse(data['expires_in'].toString());
+      tokenManager.setToken(token, refreshToken, expiresIn);
+      return token;
     } else {
       return "";
     }

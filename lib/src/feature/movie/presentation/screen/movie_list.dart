@@ -8,17 +8,17 @@ import 'package:infs803_group7_frontend/src/feature/movie/domain/model/movie.dar
 import 'package:infs803_group7_frontend/src/feature/movie/presentation/widget/movie_data.dart';
 
 class MovieList extends ConsumerStatefulWidget {
-  const MovieList(this.jwt, this.payload, {super.key});
-  final String jwt;
+  const MovieList(this.token, this.payload, {super.key});
+  final String token;
   final Map<String, dynamic> payload;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _MovieListState();
 
-  factory MovieList.fromBase64(String jwt) => MovieList(
-        jwt,
+  factory MovieList.fromBase64(String token) => MovieList(
+        token,
         json.decode(
-          ascii.decode(base64.normalize(jwt.split(".")[1]) as List<int>),
+          ascii.decode(base64.normalize(token.split(".")[1]) as List<int>),
         ) as Map<String, dynamic>,
       );
 }
@@ -32,7 +32,7 @@ class _MovieListState extends ConsumerState<MovieList> {
         title: const Text("Movie"),
       ),
       body: FutureBuilder(
-        future: fetchMovies(widget.jwt),
+        future: fetchMovies(widget.token),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return MovieData(data: snapshot.data!);
@@ -43,9 +43,9 @@ class _MovieListState extends ConsumerState<MovieList> {
     );
   }
 
-  Future<List<Movie>> fetchMovies(String jwt) async {
+  Future<List<Movie>> fetchMovies(String token) async {
     final result =
-        await http.get(Uri.parse(url), headers: {"Authorization": jwt});
+        await http.get(Uri.parse(url), headers: {"Authorization": token});
     final List<Movie> movies = [];
     if (result.statusCode == 200) {
       final data = json.decode(result.body);

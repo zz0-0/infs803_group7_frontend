@@ -8,19 +8,12 @@ import 'package:infs803_group7_frontend/src/feature/user/domain/model/user.dart'
 import 'package:infs803_group7_frontend/src/feature/user/presentation/widget/user_data.dart';
 
 class UserList extends ConsumerStatefulWidget {
-  const UserList(this.jwt, this.payload, {super.key});
-  final String jwt;
-  final Map<String, dynamic> payload;
+  const UserList({
+    super.key,
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _UserListState();
-
-  factory UserList.fromBase64(String jwt) => UserList(
-        jwt,
-        json.decode(
-          ascii.decode(base64.normalize(jwt.split(".")[1]) as List<int>),
-        ) as Map<String, dynamic>,
-      );
 }
 
 class _UserListState extends ConsumerState<UserList> {
@@ -28,7 +21,7 @@ class _UserListState extends ConsumerState<UserList> {
   @override
   void initState() {
     super.initState();
-    users = fetchUsers(widget.jwt);
+    users = fetchUsers();
   }
 
   @override
@@ -44,19 +37,23 @@ class _UserListState extends ConsumerState<UserList> {
     );
   }
 
-  Future<List<User>> fetchUsers(String jwt) async {
+  Future<List<User>> fetchUsers() async {
     final result = await http.get(
       Uri.http(url, 'api/users'),
-      headers: {"Authorization": jwt},
+      headers: {"Authorization": 'Bearer ${tokenManager.token}'},
     );
 
     if (result.statusCode == 200) {
-      final data = await json.decode(result.body);
+      final data = await json.decode(result.body) as Map<String, dynamic>;
       final userList = data["users"] as List;
 
       return userList
           .map((e) => User.fromJson(e as Map<String, dynamic>))
           .toList();
+    } else if (result.statusCode == 401) {
+      await tokenManager.refreshToken();
+      await fetchUsers();
+      return [];
     } else {
       return [];
     }
