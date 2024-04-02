@@ -44,8 +44,8 @@ class _MovieListState extends ConsumerState<MovieList> {
   }
 
   Future<List<Movie>> fetchMovies(String token) async {
-    final result =
-        await http.get(Uri.parse(url), headers: {"Authorization": token});
+    final result = await http
+        .get(Uri.parse("$url/api/movies"), headers: {"Authorization": token});
     final List<Movie> movies = [];
     if (result.statusCode == 200) {
       final data = json.decode(result.body);

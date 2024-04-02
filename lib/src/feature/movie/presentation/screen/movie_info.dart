@@ -18,18 +18,28 @@ class _MovieInfoState extends ConsumerState<MovieInfo> {
   }
 
   Future<http.Response> createMovie(Movie data) {
-    return http.post(Uri.parse(url), body: data);
+    return http.post(
+      Uri.parse("$url/api/movie"),
+      body: data,
+    );
   }
 
   Future<http.Response> fetchMovie(int movieId) {
-    return http.get(Uri.parse("$url$movieId"));
+    return http.get(
+      Uri.parse("$url/api/movie/$movieId"),
+    );
   }
 
   Future<http.Response> updateMovie(int movieId, Movie data) {
-    return http.post(Uri.parse("$url$movieId"), body: data);
+    return http.post(
+      Uri.parse("$url/api/movie/$movieId"),
+      body: data,
+    );
   }
 
   Future<http.Response> deleteMovie(int movieId) {
-    return http.delete(Uri.parse("$url$movieId"));
+    return http.delete(
+      Uri.parse("$url/api/movie/$movieId"),
+    );
   }
 }
