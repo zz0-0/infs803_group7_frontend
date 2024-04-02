@@ -23,7 +23,7 @@ class _UserInfoState extends ConsumerState<UserInfo> {
 
   Future<http.Response> createUser(User data) {
     return http.post(
-      Uri.parse("$url/api/user"),
+      Uri.parse("$url/user"),
       headers: {"Authorization": 'Bearer ${widget.token}'},
       body: data.toJson(),
     );
@@ -31,14 +31,14 @@ class _UserInfoState extends ConsumerState<UserInfo> {
 
   Future<http.Response> fetchUser(int userId) {
     return http.get(
-      Uri.parse("$url/api/user/$userId"),
+      Uri.parse("$url/user/$userId"),
       headers: {"Authorization": 'Bearer ${widget.token}'},
     );
   }
 
   Future<http.Response> updateUser(int userId, User data) {
     return http.post(
-      Uri.parse("$url/api/user/$userId"),
+      Uri.parse("$url/user/$userId"),
       headers: {"Authorization": 'Bearer ${widget.token}'},
       body: data.toJson(),
     );
@@ -46,7 +46,7 @@ class _UserInfoState extends ConsumerState<UserInfo> {
 
   Future<http.Response> deleteUser(int userId) {
     return http.delete(
-      Uri.parse("$url/api/user/$userId"),
+      Uri.parse("$url/user/$userId"),
       headers: {"Authorization": 'Bearer ${widget.token}'},
     );
   }

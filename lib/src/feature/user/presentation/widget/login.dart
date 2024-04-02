@@ -72,7 +72,7 @@ class _LoginState extends ConsumerState<Login> {
 
   Future<String> attempLogin(String username, String password) async {
     final result = await http.post(
-      Uri.parse('$url/api/login'),
+      Uri.parse('$url/login'),
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
       },

@@ -36,7 +36,7 @@ class TokenManager {
   Future<void> refreshToken() async {
     if (_refreshToken != null) {
       final response = await http.post(
-        Uri.parse("$url/api/refresh"),
+        Uri.parse("$url/refresh"),
         body: json.encode({
           'refresh_token': _refreshToken!,
         }),

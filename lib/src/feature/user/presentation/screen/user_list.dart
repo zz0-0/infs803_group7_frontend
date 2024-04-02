@@ -39,7 +39,7 @@ class _UserListState extends ConsumerState<UserList> {
 
   Future<List<User>> fetchUsers() async {
     final result = await http.get(
-      Uri.parse('$url/api/users'),
+      Uri.parse('$url/users'),
       headers: {"Authorization": 'Bearer ${tokenManager.token}'},
     );
 
