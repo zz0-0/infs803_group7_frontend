@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infs803_group7_frontend/src/feature/auth/presentation/state/auth_state_notifier_provider.dart';
 
-class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends ConsumerStatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _LoginScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
+class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   final key = GlobalKey<FormState>();
@@ -18,7 +18,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Login"),
+        title: const Text("register"),
       ),
       body: SafeArea(
         child: Column(
@@ -47,12 +47,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ElevatedButton(
               onPressed: () async {
                 if (key.currentState!.validate()) {
-                  ref
-                      .read(authStateNotifierProvider.notifier)
-                      .login(usernameController.text, passwordController.text);
+                  ref.read(authStateNotifierProvider.notifier).register(
+                      usernameController.text, passwordController.text);
                 }
               },
-              child: const Text("Login"),
+              child: const Text("register"),
             ),
           ],
         ),
