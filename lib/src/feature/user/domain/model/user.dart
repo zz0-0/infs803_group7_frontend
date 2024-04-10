@@ -2,13 +2,17 @@ class User {
   int id;
   String name;
   int level;
+  String username;
+  String password;
   DateTime? createdAt;
   DateTime? updatedAt;
 
   User({
-    required this.id,
-    required this.name,
-    this.level = 1,
+    this.id = 0,
+    this.name = "",
+    this.level = 0,
+    this.username = "",
+    this.password = "",
     this.createdAt,
     this.updatedAt,
   });
@@ -18,25 +22,20 @@ class User {
       id: json["id"] as int,
       name: json["name"] as String,
       level: json["level"] as int,
-      createdAt: DateTime.fromMicrosecondsSinceEpoch(
-        int.parse(json["created_at"] as String),
-      ),
-      updatedAt: DateTime.fromMicrosecondsSinceEpoch(
-        int.parse(json["updated_at"] as String),
-      ),
+      username: json["username"] as String,
+      password: json["password"] as String,
+      createdAt: json["createdAt"] as DateTime,
+      updatedAt: json["updatedAt"] as DateTime,
     );
   }
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "level": level,
+        "levle": level,
+        "username": username,
+        "password": password,
         "created_at": createdAt!.toUtc().millisecondsSinceEpoch,
         "updated_at": updatedAt!.toUtc().millisecondsSinceEpoch,
       };
-
-  @override
-  String toString() {
-    return "$id, $name, $level, $createdAt, $updatedAt";
-  }
 }

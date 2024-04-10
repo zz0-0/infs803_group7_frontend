@@ -2,31 +2,31 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:infs803_group7_frontend/main.dart';
-import 'package:infs803_group7_frontend/src/feature/movie/domain/model/movie.dart';
+import 'package:infs803_group7_frontend/src/feature/user/domain/model/user.dart';
 
-abstract class MovieListDataSource {
-  Future<List<Movie>> getMovieList();
+abstract class UserListDataSource {
+  Future<List<User>> getUserList();
 }
 
-class MovieListRemoteDataSource implements MovieListDataSource {
+class UserListRemoteDataSource implements UserListDataSource {
   @override
-  Future<List<Movie>> getMovieList() async {
+  Future<List<User>> getUserList() async {
     final result = await http.get(
-      Uri.parse("$url/movies"),
+      Uri.parse("$url/users"),
       headers: {"Authorization": 'Bearer ${tokenManager.token}'},
     );
-    final List<Movie> movies = [];
+    final List<User> users = [];
     if (result.statusCode == 200) {
       final data = json.decode(result.body) as Map<String, dynamic>;
-      final List dataList = data["movies"] as List;
+      final List dataList = data["users"] as List;
       return dataList
-          .map((e) => Movie.fromJson(e as Map<String, dynamic>))
+          .map((e) => User.fromJson(e as Map<String, dynamic>))
           .toList();
     } else if (result.statusCode == 401) {
       await tokenManager.refreshToken();
-      await getMovieList();
+      await getUserList();
       return [];
     }
-    return movies;
+    return users;
   }
 }

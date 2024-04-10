@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:infs803_group7_frontend/src/feature/token/domain/model/token_manager.dart';
 
-import 'package:infs803_group7_frontend/src/feature/user/presentation/screen/user_login.dart';
+// import 'package:infs803_group7_frontend/src/feature/user/presentation/screen/user_login.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         // "/movies": (BuildContext context) => const MovieList(),
         // "/users": (BuildContext context) => const UserList(),
-        "/login": (BuildContext context) => const UserLogin(),
-        "/signup": (BuildContext context) => const UserLogin(),
+        // "/login": (BuildContext context) => const UserLogin(),
+        // "/signup": (BuildContext context) => const UserLogin(),
       },
       // home: FutureBuilder(
       //   future: token,

@@ -19,7 +19,6 @@ class UserData extends ConsumerWidget {
             label: Expanded(
               child: Text(
                 'ID',
-                style: TextStyle(fontStyle: FontStyle.italic),
               ),
             ),
           ),
@@ -27,7 +26,6 @@ class UserData extends ConsumerWidget {
             label: Expanded(
               child: Text(
                 'Name',
-                style: TextStyle(fontStyle: FontStyle.italic),
               ),
             ),
           ),
@@ -35,7 +33,6 @@ class UserData extends ConsumerWidget {
             label: Expanded(
               child: Text(
                 'Level',
-                style: TextStyle(fontStyle: FontStyle.italic),
               ),
             ),
           ),
@@ -43,7 +40,6 @@ class UserData extends ConsumerWidget {
             label: Expanded(
               child: Text(
                 'Created At',
-                style: TextStyle(fontStyle: FontStyle.italic),
               ),
             ),
           ),
@@ -51,7 +47,6 @@ class UserData extends ConsumerWidget {
             label: Expanded(
               child: Text(
                 'Updated At',
-                style: TextStyle(fontStyle: FontStyle.italic),
               ),
             ),
           ),

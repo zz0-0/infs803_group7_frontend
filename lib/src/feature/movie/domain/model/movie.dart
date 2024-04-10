@@ -20,5 +20,10 @@ class Movie {
     );
   }
 
-  // factory Movie.toJson(Movie movie) {}
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "created_at": createdAt!.toUtc().millisecondsSinceEpoch,
+        "updated_at": updatedAt!.toUtc().millisecondsSinceEpoch,
+      };
 }
