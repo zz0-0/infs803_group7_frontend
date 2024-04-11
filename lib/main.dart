@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:infs803_group7_frontend/src/feature/token/domain/model/token_manager.dart';
+import 'package:infs803_group7_frontend/src/share/token/domain/model/token_manager.dart';
 
 // import 'package:infs803_group7_frontend/src/feature/user/presentation/screen/user_login.dart';
 
