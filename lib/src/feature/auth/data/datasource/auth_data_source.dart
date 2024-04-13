@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:infs803_group7_frontend/main.dart';
-import 'package:infs803_group7_frontend/src/feature/auth/domain/model/user.dart';
+import 'package:infs803_group7_frontend/src/share/domain/model/user.dart';
 
 abstract class AuthDataSource {
   Future<User> login(String username, String password);

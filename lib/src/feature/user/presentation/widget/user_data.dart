@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:infs803_group7_frontend/src/feature/user/domain/model/user.dart';
+import 'package:infs803_group7_frontend/src/share/domain/model/user.dart';
 
 class UserData extends ConsumerWidget {
   const UserData({

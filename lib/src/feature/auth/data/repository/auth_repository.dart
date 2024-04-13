@@ -1,5 +1,5 @@
 import 'package:infs803_group7_frontend/src/feature/auth/data/datasource/auth_data_source.dart';
-import 'package:infs803_group7_frontend/src/feature/auth/domain/model/user.dart';
+import 'package:infs803_group7_frontend/src/share/domain/model/user.dart';
 
 abstract class AuthRepository {
   Future<User> login(String username, String password);

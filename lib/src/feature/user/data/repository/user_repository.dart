@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:infs803_group7_frontend/src/feature/user/data/datasource/user_data_source.dart';
-import 'package:infs803_group7_frontend/src/feature/user/domain/model/user.dart';
+import 'package:infs803_group7_frontend/src/share/domain/model/user.dart';
 
 abstract class UserRepository {
   Future<http.Response> createUser(User data);

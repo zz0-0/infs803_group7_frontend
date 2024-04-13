@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:infs803_group7_frontend/src/feature/movie/data/datasource/movie_data_source.dart';
-import 'package:infs803_group7_frontend/src/feature/movie/domain/model/movie.dart';
+import 'package:infs803_group7_frontend/src/share/domain/model/movie.dart';
 
 abstract class MovieRepository {
   Future<http.Response> createMovie(Movie data);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:infs803_group7_frontend/src/feature/movie/domain/model/movie.dart';
+import 'package:infs803_group7_frontend/src/share/domain/model/movie.dart';
 
 class MovieData extends ConsumerWidget {
   const MovieData({

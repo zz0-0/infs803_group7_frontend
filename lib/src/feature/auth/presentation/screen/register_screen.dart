@@ -16,45 +16,75 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("register"),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            TextFormField(
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: ListView(
+        children: [
+          Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(10),
+            child: const Text(
+              'Sign in',
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            child: TextField(
               controller: usernameController,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your username';
-                }
-
-                return null;
-              },
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'User Name',
+              ),
             ),
-            TextFormField(
-              controller: passwordController,
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+            child: TextField(
               obscureText: true,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your password';
-                }
-
-                return null;
+              controller: passwordController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Password',
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+            child: TextField(
+              obscureText: true,
+              controller: passwordController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Password Again',
+              ),
+            ),
+          ),
+          Container(
+            height: 50,
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: ElevatedButton(
+              child: const Text('Sign Up'),
+              onPressed: () {
+                // Implement login logic here
+                ref
+                    .read(authStateNotifierProvider.notifier)
+                    .register(usernameController.text, passwordController.text);
               },
             ),
-            ElevatedButton(
-              onPressed: () async {
-                if (key.currentState!.validate()) {
-                  ref.read(authStateNotifierProvider.notifier).register(
-                      usernameController.text, passwordController.text);
-                }
-              },
-              child: const Text("register"),
-            ),
-          ],
-        ),
+          ),
+          Row(
+            children: <Widget>[
+              const Text("Already have an account?"),
+              TextButton(
+                onPressed: () {
+                  // Implement sign-up navigation
+                },
+                child: const Text('Login'),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
