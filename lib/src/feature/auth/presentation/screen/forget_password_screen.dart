@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infs803_group7_frontend/src/feature/auth/presentation/state/auth_state_notifier_provider.dart';
 
-class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({super.key});
+class ForgetPasswordScreen extends ConsumerStatefulWidget {
+  const ForgetPasswordScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _LoginScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ForgetPasswordScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
+class _ForgetPasswordScreenState extends ConsumerState<ForgetPasswordScreen> {
   final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
+  final emailController = TextEditingController();
   final key = GlobalKey<FormState>();
 
   @override
@@ -42,11 +43,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             Container(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: TextField(
-                obscureText: true,
-                controller: passwordController,
+                controller: emailController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Password',
+                  labelText: 'Email Address',
                 ),
               ),
             ),
@@ -65,7 +65,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   // Implement login logic here
                   ref
                       .read(authStateNotifierProvider.notifier)
-                      .login(usernameController.text, passwordController.text);
+                      .forget(usernameController.text, emailController.text);
                 },
               ),
             ),

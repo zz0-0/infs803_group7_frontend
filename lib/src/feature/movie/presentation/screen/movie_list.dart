@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:infs803_group7_frontend/src/feature/movie/presentation/screen/movie_info.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/presentation/state/movie_state_notifier_provider.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/movie.dart';
 
@@ -30,6 +31,12 @@ class _MovieListState extends ConsumerState<MovieList> {
               return GestureDetector(
                 onTap: () {
                   // Handle movie tap (e.g., navigate to movie details)
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MovieInfo(id: movie.id),
+                    ),
+                  );
                 },
                 child: Card(
                   elevation: 4.0,
@@ -40,7 +47,9 @@ class _MovieListState extends ConsumerState<MovieList> {
                       Text(
                         movie.name,
                         style: const TextStyle(
-                            fontSize: 16.0, fontWeight: FontWeight.bold),
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),

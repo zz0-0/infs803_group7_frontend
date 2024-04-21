@@ -13,9 +13,13 @@ class UserListRemoteDataSource implements UserListDataSource {
   Future<List<User>> getUserList() async {
     final result = await http.get(
       Uri.parse("$url/users"),
-      headers: {"Authorization": 'Bearer ${tokenManager.token}'},
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      // headers: {"Authorization": 'Bearer ${tokenManager.token}'},
     );
     final List<User> users = [];
+
     if (result.statusCode == 200) {
       final data = json.decode(result.body) as Map<String, dynamic>;
       final List dataList = data["users"] as List;

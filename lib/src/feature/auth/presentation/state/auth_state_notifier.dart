@@ -28,4 +28,15 @@ class AuthStateNotifier extends StateNotifier<AsyncValue<void>> {
       state = const AsyncValue.data(null);
     }
   }
+
+  Future<void> forget(String username, String email) async {
+    try {
+      state = const AsyncValue.loading();
+      await authRepository.forget(username, email);
+    } catch (e) {
+      // state = const AsyncError("error", e);
+    } finally {
+      state = const AsyncValue.data(null);
+    }
+  }
 }

@@ -17,7 +17,10 @@ class MovieRemoteDataSource implements MovieDataSource {
   Future<http.Response> createMovie(Movie data) async {
     return http.post(
       Uri.parse("$url/movie"),
-      headers: {"Authorization": 'Bearer ${tokenManager.token}'},
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      // headers: {"Authorization": 'Bearer ${tokenManager.token}'},
       body: data.toJson(),
     );
   }
@@ -26,7 +29,10 @@ class MovieRemoteDataSource implements MovieDataSource {
   Future<http.Response> deleteMovie(int movieId) async {
     return http.delete(
       Uri.parse("$url/movie/$movieId"),
-      headers: {"Authorization": 'Bearer ${tokenManager.token}'},
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      // headers: {"Authorization": 'Bearer ${tokenManager.token}'},
     );
   }
 
@@ -35,7 +41,10 @@ class MovieRemoteDataSource implements MovieDataSource {
     late Movie movie;
     final result = await http.get(
       Uri.parse("$url/movie/$movieId"),
-      headers: {"Authorization": 'Bearer ${tokenManager.token}'},
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      // headers: {"Authorization": 'Bearer ${tokenManager.token}'},
     );
 
     if (result.statusCode == 200) {

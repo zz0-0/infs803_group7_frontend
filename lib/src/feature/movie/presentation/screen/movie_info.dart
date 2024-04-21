@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MovieInfo extends ConsumerStatefulWidget {
-  final String name;
+  final int id;
 
-  const MovieInfo({super.key, required this.name});
+  const MovieInfo({super.key, required this.id});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _MovieInfoState();
@@ -25,7 +25,7 @@ class _MovieInfoState extends ConsumerState<MovieInfo> {
           ),
           const SizedBox(height: 16),
           Text(
-            widget.name,
+            widget.id.toString(),
             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),

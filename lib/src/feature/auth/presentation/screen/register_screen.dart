@@ -16,75 +16,83 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: ListView(
-        children: [
-          Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(10),
-            child: const Text(
-              'Sign in',
-              style: TextStyle(fontSize: 20),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(10),
-            child: TextField(
-              controller: usernameController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'User Name',
+    return Material(
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: ListView(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(10),
+              child: const Text(
+                'Sign Up',
+                style: TextStyle(fontSize: 20),
               ),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-            child: TextField(
-              obscureText: true,
-              controller: passwordController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Password',
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                controller: usernameController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'User Name',
+                ),
               ),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-            child: TextField(
-              obscureText: true,
-              controller: passwordController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Password Again',
+            Container(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: TextField(
+                obscureText: true,
+                controller: passwordController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Password',
+                ),
               ),
             ),
-          ),
-          Container(
-            height: 50,
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-            child: ElevatedButton(
-              child: const Text('Sign Up'),
-              onPressed: () {
-                // Implement login logic here
-                ref
-                    .read(authStateNotifierProvider.notifier)
-                    .register(usernameController.text, passwordController.text);
-              },
+            Container(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: TextField(
+                obscureText: true,
+                controller: passwordController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Password Again',
+                ),
+              ),
             ),
-          ),
-          Row(
-            children: <Widget>[
-              const Text("Already have an account?"),
-              TextButton(
+            Container(
+              height: 50,
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: ElevatedButton(
+                child: const Text('Sign Up'),
                 onPressed: () {
-                  // Implement sign-up navigation
+                  // Implement login logic here
+
+                  ref.read(authStateNotifierProvider.notifier).register(
+                        usernameController.text,
+                        passwordController.text,
+                      );
                 },
-                child: const Text('Login'),
               ),
-            ],
-          ),
-        ],
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: Row(
+                children: <Widget>[
+                  const Text("Already have an account?"),
+                  TextButton(
+                    onPressed: () {
+                      // Implement sign-up navigation
+                      Navigator.pushNamed(context, "/login");
+                    },
+                    child: const Text('Login'),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -13,7 +13,10 @@ class MovieListRemoteDataSource implements MovieListDataSource {
   Future<List<Movie>> getMovieList() async {
     final result = await http.get(
       Uri.parse("$url/movies"),
-      headers: {"Authorization": 'Bearer ${tokenManager.token}'},
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      // headers: {"Authorization": 'Bearer ${tokenManager.token}'},
     );
     final List<Movie> movies = [];
     if (result.statusCode == 200) {

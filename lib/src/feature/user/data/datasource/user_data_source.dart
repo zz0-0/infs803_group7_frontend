@@ -17,7 +17,10 @@ class UserRemoteDataSource implements UserDataSource {
   Future<http.Response> createUser(User data) async {
     return http.post(
       Uri.parse("$url/user"),
-      headers: {"Authorization": 'Bearer ${tokenManager.token}'},
+      // headers: {"Authorization": 'Bearer ${tokenManager.token}'},
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
       body: data.toJson(),
     );
   }
@@ -26,7 +29,10 @@ class UserRemoteDataSource implements UserDataSource {
   Future<http.Response> deleteUser(int userId) async {
     return http.delete(
       Uri.parse("$url/user/$userId"),
-      headers: {"Authorization": 'Bearer ${tokenManager.token}'},
+      // headers: {"Authorization": 'Bearer ${tokenManager.token}'},
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
     );
   }
 
@@ -35,7 +41,10 @@ class UserRemoteDataSource implements UserDataSource {
     late User user;
     final result = await http.get(
       Uri.parse("$url/user/$userId"),
-      headers: {"Authorization": 'Bearer ${tokenManager.token}'},
+      // headers: {"Authorization": 'Bearer ${tokenManager.token}'},
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
     );
 
     if (result.statusCode == 200) {

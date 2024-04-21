@@ -8,6 +8,7 @@ abstract class AuthDataSource {
   Future<User> login(String username, String password);
   Future<User> register(String username, String password);
   Future<void> logout();
+  Future<bool> forget(String username, String email);
 }
 
 class AuthRemoteDataSource implements AuthDataSource {
@@ -57,4 +58,9 @@ class AuthRemoteDataSource implements AuthDataSource {
 
   @override
   Future<void> logout() async {}
+
+  @override
+  Future<bool> forget(String username, String email) async {
+    return true;
+  }
 }

@@ -4,7 +4,7 @@ class User {
   int level;
   String username;
   String password;
-  String token;
+  // String token;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -13,7 +13,7 @@ class User {
     this.name = "",
     this.username = "",
     this.password = "",
-    this.token = "",
+    // this.token = "",
     this.level = 1,
     this.createdAt,
     this.updatedAt,
@@ -26,7 +26,7 @@ class User {
       level: json["level"] as int,
       username: json["username"] as String,
       password: json["password"] as String,
-      token: json["token"] as String,
+      // token: json["token"] as String,
       createdAt: DateTime.fromMicrosecondsSinceEpoch(
         int.parse(json["created_at"] as String),
       ),

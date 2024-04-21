@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UserInfo extends ConsumerStatefulWidget {
-  final String username;
+  final int id;
 
-  const UserInfo({super.key, required this.username});
+  const UserInfo({super.key, required this.id});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _UserInfoState();
@@ -25,7 +25,7 @@ class _UserInfoState extends ConsumerState<UserInfo> {
           ),
           const SizedBox(height: 16),
           Text(
-            widget.username,
+            widget.id.toString(),
             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
