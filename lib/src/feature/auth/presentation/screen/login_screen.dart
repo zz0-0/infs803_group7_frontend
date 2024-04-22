@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infs803_group7_frontend/src/feature/auth/presentation/state/auth_state_notifier_provider.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -16,6 +17,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var isLoading = ref.watch(authStateNotifierProvider).isLoading;
+
     return Material(
       child: Padding(
         padding: const EdgeInsets.all(10),
@@ -60,12 +63,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               height: 50,
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: ElevatedButton(
-                child: const Text('Login'),
+                child: isLoading
+                    ? LoadingAnimationWidget.halfTriangleDot(
+                        color: Colors.white,
+                        size: 30,
+                      )
+                    : const Text('Login'),
                 onPressed: () {
                   // Implement login logic here
                   ref
                       .read(authStateNotifierProvider.notifier)
                       .login(usernameController.text, passwordController.text);
+                  Navigator.pushNamed(context, "/users");
                 },
               ),
             ),

@@ -2,7 +2,7 @@ import 'package:infs803_group7_frontend/src/feature/auth/data/datasource/auth_da
 import 'package:infs803_group7_frontend/src/share/domain/model/user.dart';
 
 abstract class AuthRepository {
-  Future<User> login(String username, String password);
+  Future<String> login(String username, String password);
   Future<User> register(String username, String password);
   Future<bool> forget(String username, String email);
 }
@@ -13,7 +13,7 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this.authDataSource);
 
   @override
-  Future<User> login(String username, String password) {
+  Future<String> login(String username, String password) {
     return authDataSource.login(username, password);
   }
 

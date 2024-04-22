@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: <String, WidgetBuilder>{
-        "/": (context) => const UserList(),
+        "/": (context) => const LoginScreen(),
         "/movies": (context) => const MovieList(),
         "/users": (context) => const UserList(),
         "/login": (context) => const LoginScreen(),
