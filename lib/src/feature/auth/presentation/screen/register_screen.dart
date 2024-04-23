@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:infs803_group7_frontend/src/feature/auth/presentation/state/auth_state_notifier_provider.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
@@ -84,7 +85,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   TextButton(
                     onPressed: () {
                       // Implement sign-up navigation
-                      Navigator.pushNamed(context, "/login");
+                      // Navigator.pushNamed(context, "/login");
+                      context.go("/login");
                     },
                     child: const Text('Login'),
                   ),

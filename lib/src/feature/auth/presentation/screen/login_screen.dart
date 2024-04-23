@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:infs803_group7_frontend/src/feature/auth/presentation/state/auth_state_notifier_provider.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -71,10 +72,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     : const Text('Login'),
                 onPressed: () {
                   // Implement login logic here
-                  ref
-                      .read(authStateNotifierProvider.notifier)
-                      .login(usernameController.text, passwordController.text);
-                  Navigator.pushNamed(context, "/users");
+                  // ref
+                  //     .read(authStateNotifierProvider.notifier)
+                  //     .login(usernameController.text, passwordController.text);
+                  context.go("/users");
+                  // Navigator.pushNamed(context, "/users");
                 },
               ),
             ),
@@ -86,7 +88,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   TextButton(
                     onPressed: () {
                       // Implement sign-up navigation
-                      Navigator.pushNamed(context, "/register");
+                      // Navigator.pushNamed(context, "/register");
+                      context.go("/register");
                     },
                     child: const Text('Sign Up'),
                   ),

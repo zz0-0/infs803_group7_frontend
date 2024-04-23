@@ -10,7 +10,18 @@ class MovieListStateNotifier extends StateNotifier<AsyncValue<void>> {
       : super(const AsyncValue.data(null));
 
   Future<List<Movie>> getMovieList() async {
-    final List<Movie> response = await movieListRepository.getMovieList();
+    List<Movie> response = [];
+    try {
+      state = const AsyncValue.loading();
+      response = await movieListRepository.getMovieList();
+    } catch (e) {
+      // state = const AsyncError("error", e);
+    } finally {
+      state = const AsyncValue.data(null);
+    }
+    return response;
+
+    // final List<Movie> response = await movieListRepository.getMovieList();
 
     // try {
     //   state = const AsyncValue.loading();
@@ -21,7 +32,7 @@ class MovieListStateNotifier extends StateNotifier<AsyncValue<void>> {
     //   state = const AsyncValue.data(null);
     // }
 
-    return response;
+    // return response;
   }
 }
 

@@ -10,7 +10,16 @@ class UserListStateNotifier extends StateNotifier<AsyncValue<void>> {
       : super(const AsyncValue.data(null));
 
   Future<List<User>> getUserList() async {
-    final response = await userListRepository.getUserList();
+    late Future<List<User>> response;
+    try {
+      state = const AsyncValue.loading();
+      response = userListRepository.getUserList();
+    } catch (e) {
+      // state = const AsyncError("error", e);
+    } finally {
+      state = const AsyncValue.data(null);
+    }
+    return response;
 
     // try {
     //   state = const AsyncValue.loading();
@@ -21,7 +30,7 @@ class UserListStateNotifier extends StateNotifier<AsyncValue<void>> {
     //   state = const AsyncValue.data(null);
     // }
 
-    return response;
+    // return response;
   }
 }
 
@@ -31,4 +40,23 @@ class UserStateNotifier extends StateNotifier<AsyncValue<void>> {
 
   UserStateNotifier({required this.userRepository})
       : super(const AsyncValue.data(null));
+
+  Future<void> create() async {}
+
+  Future<void> get() async {}
+
+  Future<void> update() async {}
+
+  Future<void> delete(int id) async {
+    try {
+      state = const AsyncValue.loading();
+      // response =
+      await userRepository.deleteUser(id);
+    } catch (e) {
+      // state = const AsyncError("error", e);
+    } finally {
+      state = const AsyncValue.data(null);
+    }
+    // return response;
+  }
 }

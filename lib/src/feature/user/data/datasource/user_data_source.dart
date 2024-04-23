@@ -27,12 +27,13 @@ class UserRemoteDataSource implements UserDataSource {
 
   @override
   Future<http.Response> deleteUser(int userId) async {
+    // print("111");
     return http.delete(
       Uri.parse("$url/user/$userId"),
       // headers: {"Authorization": 'Bearer ${tokenManager.token}'},
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
+      // headers: {
+      //   'Content-Type': 'application/json; charset=UTF-8',
+      // },
     );
   }
 
