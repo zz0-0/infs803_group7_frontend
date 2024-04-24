@@ -13,7 +13,6 @@ class AuthStateNotifier extends StateNotifier<AsyncValue<String>> {
       state = const AsyncValue.loading();
       token = await authRepository.login(username, password);
     } catch (e) {
-      // state = const AsyncError("error", e);
     } finally {
       state = const AsyncValue.data("");
     }
@@ -25,7 +24,6 @@ class AuthStateNotifier extends StateNotifier<AsyncValue<String>> {
       state = const AsyncValue.loading();
       await authRepository.register(username, password);
     } catch (e) {
-      // state = const AsyncError("error", e);
     } finally {
       state = const AsyncValue.data("");
     }
@@ -36,7 +34,6 @@ class AuthStateNotifier extends StateNotifier<AsyncValue<String>> {
       state = const AsyncValue.loading();
       await authRepository.forget(username, email);
     } catch (e) {
-      // state = const AsyncError("error", e);
     } finally {
       state = const AsyncValue.data("");
     }

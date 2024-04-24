@@ -5,6 +5,7 @@ class User {
   String username;
   String password;
   // String token;
+  bool deleted;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -15,9 +16,22 @@ class User {
     this.password = "",
     // this.token = "",
     this.level = 1,
+    this.deleted = false,
     this.createdAt,
     this.updatedAt,
   });
+
+  // User.empty() {
+  //   final int id = 0;
+  //   final String name = "";
+  //   final String username = "";
+  //   final String password = "";
+
+  //   final int level = 1;
+  //   final bool deleted = false;
+  //   final DateTime createdAt = DateTime.fromMicrosecondsSinceEpoch(0);
+  //   final DateTime updatedAt = DateTime.fromMicrosecondsSinceEpoch(0);
+  // }
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -26,6 +40,7 @@ class User {
       level: json["level"] as int,
       username: json["username"] as String,
       password: json["password"] as String,
+      deleted: bool.parse(json["deleted"].toString()),
       // token: json["token"] as String,
       createdAt: DateTime.fromMicrosecondsSinceEpoch(
         int.parse(json["created_at"] as String),
@@ -40,14 +55,15 @@ class User {
         "id": id,
         "name": name,
         "level": level,
-        "username": name,
-        "password": name,
-        "created_at": createdAt!.toUtc().millisecondsSinceEpoch,
-        "updated_at": updatedAt!.toUtc().millisecondsSinceEpoch,
+        "username": username,
+        "password": password,
+        "deleted": deleted,
+        "created_at": createdAt!.toUtc().millisecondsSinceEpoch.toString(),
+        "updated_at": updatedAt!.toUtc().millisecondsSinceEpoch.toString(),
       };
 
   @override
   String toString() {
-    return "$id, $name, $level, $username, $password, $createdAt, $updatedAt";
+    return "$id, $name, $level, $username, $password, $deleted, $createdAt, $updatedAt";
   }
 }

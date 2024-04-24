@@ -3,21 +3,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:infs803_group7_frontend/src/feature/auth/presentation/screen/login_screen.dart';
 import 'package:infs803_group7_frontend/src/feature/auth/presentation/screen/register_screen.dart';
-import 'package:infs803_group7_frontend/src/feature/favorite/presentation/screen/favorite_screen.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/presentation/screen/movie_info.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/presentation/screen/movie_list.dart';
+import 'package:infs803_group7_frontend/src/feature/user/presentation/screen/user_add.dart';
 import 'package:infs803_group7_frontend/src/feature/user/presentation/screen/user_info.dart';
 import 'package:infs803_group7_frontend/src/feature/user/presentation/screen/user_list.dart';
-import 'package:infs803_group7_frontend/src/share/token/domain/model/token_manager.dart';
 
 // import 'package:infs803_group7_frontend/src/feature/user/presentation/screen/user_login.dart';
 
 void main() {
   runApp(ProviderScope(child: MyApp()));
 }
-
-const String url = "http://localhost:3000";
-final TokenManager tokenManager = TokenManager();
 
 final _router = GoRouter(
   initialLocation: "/",
@@ -117,6 +113,26 @@ final _router = GoRouter(
       //   id: int.parse(state.pathParameters['userId']!),
       // ),
     ),
+    GoRoute(
+      path: '/user_add',
+      name: "user_add",
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: const UserAdd(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity:
+                  CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+              child: child,
+            );
+          },
+        );
+      },
+      // builder: (context, state) => UserInfo(
+      //   id: int.parse(state.pathParameters['userId']!),
+      // ),
+    ),
     // GoRoute(
     //   path: '/favorite/:userId',
     //   pageBuilder: (context, state) {
@@ -179,8 +195,6 @@ final _router = GoRouter(
 );
 
 class MyApp extends StatelessWidget {
-  final bool loggedIn = true;
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

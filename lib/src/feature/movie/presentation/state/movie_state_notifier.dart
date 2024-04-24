@@ -15,24 +15,10 @@ class MovieListStateNotifier extends StateNotifier<AsyncValue<void>> {
       state = const AsyncValue.loading();
       response = await movieListRepository.getMovieList();
     } catch (e) {
-      // state = const AsyncError("error", e);
     } finally {
       state = const AsyncValue.data(null);
     }
     return response;
-
-    // final List<Movie> response = await movieListRepository.getMovieList();
-
-    // try {
-    //   state = const AsyncValue.loading();
-    //   response = await movieListRepository.getMovieList();
-    // } catch (e) {
-    //   // state = const AsyncError("error", e);
-    // } finally {
-    //   state = const AsyncValue.data(null);
-    // }
-
-    // return response;
   }
 }
 

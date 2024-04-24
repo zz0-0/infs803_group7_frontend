@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:infs803_group7_frontend/main.dart';
+import 'package:infs803_group7_frontend/global.dart';
 
 class TokenManager {
   String? _token;

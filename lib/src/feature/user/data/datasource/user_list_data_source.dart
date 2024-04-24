@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:infs803_group7_frontend/main.dart';
+import 'package:infs803_group7_frontend/global.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/user.dart';
 
 abstract class UserListDataSource {
@@ -25,6 +25,7 @@ class UserListRemoteDataSource implements UserListDataSource {
       final List dataList = data["users"] as List;
       return dataList
           .map((e) => User.fromJson(e as Map<String, dynamic>))
+          .where((e) => e.deleted != true)
           .toList();
     } else if (result.statusCode == 401) {
       await tokenManager.refreshToken();

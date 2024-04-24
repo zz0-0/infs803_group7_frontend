@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:infs803_group7_frontend/main.dart';
+import 'package:infs803_group7_frontend/global.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/movie.dart';
 
 abstract class MovieDataSource {
@@ -11,7 +11,6 @@ abstract class MovieDataSource {
   Future<http.Response> deleteMovie(int movieId);
 }
 
-// TODO
 class MovieRemoteDataSource implements MovieDataSource {
   @override
   Future<http.Response> createMovie(Movie data) async {

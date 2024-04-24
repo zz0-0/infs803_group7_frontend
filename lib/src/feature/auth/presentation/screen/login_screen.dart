@@ -18,7 +18,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var isLoading = ref.watch(authStateNotifierProvider).isLoading;
+    final isLoading = ref.watch(authStateNotifierProvider).isLoading;
 
     return Material(
       child: Padding(
@@ -71,12 +71,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       )
                     : const Text('Login'),
                 onPressed: () {
-                  // Implement login logic here
-                  // ref
-                  //     .read(authStateNotifierProvider.notifier)
-                  //     .login(usernameController.text, passwordController.text);
                   context.go("/users");
-                  // Navigator.pushNamed(context, "/users");
                 },
               ),
             ),
@@ -87,8 +82,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   const Text("Don't have an account?"),
                   TextButton(
                     onPressed: () {
-                      // Implement sign-up navigation
-                      // Navigator.pushNamed(context, "/register");
                       context.go("/register");
                     },
                     child: const Text('Sign Up'),

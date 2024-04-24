@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:infs803_group7_frontend/main.dart';
+import 'package:infs803_group7_frontend/global.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/user.dart';
 
 abstract class UserDataSource {
@@ -11,7 +11,6 @@ abstract class UserDataSource {
   Future<http.Response> deleteUser(int userId);
 }
 
-// TODO
 class UserRemoteDataSource implements UserDataSource {
   @override
   Future<http.Response> createUser(User data) async {
@@ -27,7 +26,6 @@ class UserRemoteDataSource implements UserDataSource {
 
   @override
   Future<http.Response> deleteUser(int userId) async {
-    // print("111");
     return http.delete(
       Uri.parse("$url/user/$userId"),
       // headers: {"Authorization": 'Bearer ${tokenManager.token}'},
@@ -60,9 +58,12 @@ class UserRemoteDataSource implements UserDataSource {
 
   @override
   Future<http.Response> updateUser(int userId, User data) async {
-    return http.post(
+    return http.patch(
       Uri.parse("$url/user/$userId"),
-      body: data.toJson(),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: json.encode(data),
     );
   }
 }

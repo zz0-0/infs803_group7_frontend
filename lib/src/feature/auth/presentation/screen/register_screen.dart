@@ -68,8 +68,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               child: ElevatedButton(
                 child: const Text('Sign Up'),
                 onPressed: () {
-                  // Implement login logic here
-
                   ref.read(authStateNotifierProvider.notifier).register(
                         usernameController.text,
                         passwordController.text,
@@ -84,8 +82,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   const Text("Already have an account?"),
                   TextButton(
                     onPressed: () {
-                      // Implement sign-up navigation
-                      // Navigator.pushNamed(context, "/login");
                       context.go("/login");
                     },
                     child: const Text('Login'),
