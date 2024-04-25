@@ -20,19 +20,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     final isLoading = ref.watch(authStateNotifierProvider).isLoading;
 
-    return Material(
-      child: Padding(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Login"),
+      ),
+      body: Padding(
         padding: const EdgeInsets.all(10),
         child: ListView(
           children: [
-            Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(10),
-              child: const Text(
-                'Sign in',
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
             Container(
               padding: const EdgeInsets.all(10),
               child: TextField(

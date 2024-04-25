@@ -5,7 +5,7 @@ import 'package:infs803_group7_frontend/global.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/user.dart';
 
 abstract class UserDataSource {
-  Future<http.Response> createUser(User data);
+  Future<http.Response> createUser(int userId, User data);
   Future<User> getUser(int userId);
   Future<http.Response> updateUser(int userId, User data);
   Future<http.Response> deleteUser(int userId);
@@ -13,14 +13,14 @@ abstract class UserDataSource {
 
 class UserRemoteDataSource implements UserDataSource {
   @override
-  Future<http.Response> createUser(User data) async {
+  Future<http.Response> createUser(int userId, User data) async {
     return http.post(
-      Uri.parse("$url/user"),
+      Uri.parse("$url/user/$userId"),
       // headers: {"Authorization": 'Bearer ${tokenManager.token}'},
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: data.toJson(),
+      body: json.encode(data),
     );
   }
 

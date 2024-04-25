@@ -27,20 +27,17 @@ class _UserListState extends ConsumerState<UserList> {
             itemCount: data.length,
             itemBuilder: (BuildContext context, int index) {
               final user = data[index];
-
               return ListTile(
                 leading: CircleAvatar(
                   child: Text(
                     user.name[0],
-                  ), // Display first letter of user's name
+                  ),
                 ),
                 title: Text(
-                  "Name: ${user.name}             Username: ${user.username}",
+                  "Name: ${user.name}",
                 ),
-                subtitle: Text('User ID: ${user.id}'),
-                onTap: () {
-                  // Handle user tap (e.g., navigate to user profile)
-                },
+                subtitle: Text('Username: ${user.username}'),
+                onTap: () {},
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -48,7 +45,7 @@ class _UserListState extends ConsumerState<UserList> {
                       onPressed: () {
                         context.goNamed(
                           "user",
-                          pathParameters: {"userId": (user.id - 1).toString()},
+                          pathParameters: {"userId": user.id.toString()},
                         );
                       },
                       child: const Text('Edit'),
@@ -67,12 +64,7 @@ class _UserListState extends ConsumerState<UserList> {
                                   ref.refresh(userListStateNotifierProvider),
                             );
                       },
-                      child: value.isLoading
-                          ? LoadingAnimationWidget.halfTriangleDot(
-                              color: Colors.deepPurple,
-                              size: 20,
-                            )
-                          : const Text('Delete'),
+                      child: const Text('Delete'),
                     ),
                   ],
                 ),
@@ -83,6 +75,7 @@ class _UserListState extends ConsumerState<UserList> {
             onPressed: () {
               context.go("/user_add");
             },
+            child: const Icon(Icons.add),
           ),
         );
       },

@@ -12,3 +12,5 @@ final userStateNotifierProvider =
         (ref, id) {
   return UserStateNotifier(ref, id);
 });
+
+final userIdProvider = StateProvider((ref) => 0);

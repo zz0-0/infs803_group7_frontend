@@ -1,5 +1,6 @@
 class User {
   int id;
+  // String id2;
   String name;
   int level;
   String username;
@@ -11,6 +12,7 @@ class User {
 
   User({
     this.id = 0,
+    // this.id2 = "",
     this.name = "",
     this.username = "",
     this.password = "",

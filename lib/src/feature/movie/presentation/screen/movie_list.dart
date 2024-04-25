@@ -16,60 +16,65 @@ class _MovieListState extends ConsumerState<MovieList> {
   @override
   Widget build(BuildContext context) {
     final value = ref.read(movieListStreamProvider);
-    return value.when(
-      data: (List<Movie> data) {
-        return GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 8.0,
-            crossAxisSpacing: 8.0,
-          ),
-          itemCount: data.length,
-          itemBuilder: (BuildContext context, int index) {
-            final movie = data[index];
-            return GestureDetector(
-              onTap: () {
-                context.goNamed(
-                  "movie",
-                  pathParameters: {"id": movie.id.toString()},
-                );
-              },
-              child: Card(
-                elevation: 4.0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      movie.name,
-                      style: const TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Movie List"),
+      ),
+      body: value.when(
+        data: (List<Movie> data) {
+          return GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 8.0,
+              crossAxisSpacing: 8.0,
+            ),
+            itemCount: data.length,
+            itemBuilder: (BuildContext context, int index) {
+              final movie = data[index];
+              return GestureDetector(
+                onTap: () {
+                  context.goNamed(
+                    "movie",
+                    pathParameters: {"id": movie.id.toString()},
+                  );
+                },
+                child: Card(
+                  elevation: 4.0,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        movie.name,
+                        style: const TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
-        );
-      },
-      error: (Object error, StackTrace stackTrace) {
-        return Center(
-          child: Text(
-            error.toString(),
-            style: Theme.of(context)
-                .textTheme
-                .titleLarge!
-                .copyWith(color: Colors.red),
-          ),
-        );
-      },
-      loading: () {
-        return LoadingAnimationWidget.halfTriangleDot(
-          color: Colors.white,
-          size: 30,
-        );
-      },
+              );
+            },
+          );
+        },
+        error: (Object error, StackTrace stackTrace) {
+          return Center(
+            child: Text(
+              error.toString(),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(color: Colors.red),
+            ),
+          );
+        },
+        loading: () {
+          return LoadingAnimationWidget.halfTriangleDot(
+            color: Colors.white,
+            size: 30,
+          );
+        },
+      ),
     );
   }
 }

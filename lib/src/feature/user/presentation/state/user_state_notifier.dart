@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infs803_group7_frontend/src/feature/user/data/repository/user_list_repository.dart';
 import 'package:infs803_group7_frontend/src/feature/user/data/repository/user_repository.dart';
 import 'package:infs803_group7_frontend/src/feature/user/domain/provider/user_provider.dart';
+import 'package:infs803_group7_frontend/src/feature/user/presentation/state/user_state_notifier_provider.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/user.dart';
 
 class UserListStateNotifier extends StateNotifier<AsyncValue<List<User>>> {
@@ -17,7 +18,10 @@ class UserListStateNotifier extends StateNotifier<AsyncValue<List<User>>> {
   Future<void> getUserList() async {
     final UserListRepository userListRepository =
         ref.watch(userListRepositoryProvider);
-    state = await AsyncValue.guard(() => userListRepository.getUserList());
+    final users = await userListRepository.getUserList();
+    final User user = users[users.length - 1];
+    ref.read(userIdProvider.notifier).update((state) => user.id);
+    state = await AsyncValue.guard(() => Future(() => users));
   }
 }
 

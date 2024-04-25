@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:infs803_group7_frontend/src/feature/auth/presentation/state/auth_state_notifier_provider.dart';
+import 'package:infs803_group7_frontend/src/feature/user/domain/provider/user_provider.dart';
+import 'package:infs803_group7_frontend/src/feature/user/presentation/state/user_state_notifier_provider.dart';
+import 'package:infs803_group7_frontend/src/share/domain/model/user.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -11,25 +14,27 @@ class RegisterScreen extends ConsumerStatefulWidget {
 }
 
 class _RegisterScreenState extends ConsumerState<RegisterScreen> {
+  final nameController = TextEditingController();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  final levelController = TextEditingController();
+
   final key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Padding(
-        padding: const EdgeInsets.all(10),
+    final User user = User(
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Register"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(10),
-              child: const Text(
-                'Sign Up',
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
             Container(
               padding: const EdgeInsets.all(10),
               child: TextField(
@@ -41,7 +46,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               ),
             ),
             Container(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              padding: const EdgeInsets.all(10),
               child: TextField(
                 obscureText: true,
                 controller: passwordController,
@@ -52,7 +57,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               ),
             ),
             Container(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              padding: const EdgeInsets.all(10),
               child: TextField(
                 obscureText: true,
                 controller: passwordController,
@@ -64,19 +69,33 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             ),
             Container(
               height: 50,
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              padding: const EdgeInsets.all(10),
               child: ElevatedButton(
                 child: const Text('Sign Up'),
                 onPressed: () {
-                  ref.read(authStateNotifierProvider.notifier).register(
-                        usernameController.text,
-                        passwordController.text,
-                      );
+                  user.id = ref.read(userIdProvider) + 1;
+                  user.deleted = false;
+                  user.createdAt = DateTime.now();
+                  user.updatedAt = DateTime.now();
+                  user.name = nameController.text;
+                  user.username = usernameController.text;
+                  user.password = passwordController.text;
+                  user.level = int.parse(levelController.text);
+
+                  ref
+                      .read(userRepositoryProvider)
+                      .updateUser(user.id - 1, user)
+                      .then(
+                    (value) {
+                      // ref.refresh(userListStateNotifierProvider);
+                      context.go("/users");
+                    },
+                  );
                 },
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              padding: const EdgeInsets.all(10),
               child: Row(
                 children: <Widget>[
                   const Text("Already have an account?"),

@@ -20,7 +20,7 @@ class MovieRemoteDataSource implements MovieDataSource {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       // headers: {"Authorization": 'Bearer ${tokenManager.token}'},
-      body: data.toJson(),
+      body: json.encode(data),
     );
   }
 
@@ -60,7 +60,7 @@ class MovieRemoteDataSource implements MovieDataSource {
   Future<http.Response> updateMovie(int movieId, Movie data) async {
     return http.post(
       Uri.parse("$url/movie/$movieId"),
-      body: data.toJson(),
+      body: json.encode(data),
     );
   }
 }

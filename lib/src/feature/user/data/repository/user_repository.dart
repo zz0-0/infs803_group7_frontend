@@ -3,7 +3,7 @@ import 'package:infs803_group7_frontend/src/feature/user/data/datasource/user_da
 import 'package:infs803_group7_frontend/src/share/domain/model/user.dart';
 
 abstract class UserRepository {
-  Future<http.Response> createUser(User data);
+  Future<http.Response> createUser(int userId, User data);
   Future<User> getUser(int userId);
   Future<http.Response> updateUser(int userId, User data);
   Future<http.Response> deleteUser(int userId);
@@ -15,8 +15,8 @@ class UserRepositoryImpl implements UserRepository {
   UserRepositoryImpl(this.userDataSource);
 
   @override
-  Future<http.Response> createUser(User data) async {
-    return userDataSource.createUser(data);
+  Future<http.Response> createUser(int userId, User data) async {
+    return userDataSource.createUser(userId, data);
   }
 
   @override

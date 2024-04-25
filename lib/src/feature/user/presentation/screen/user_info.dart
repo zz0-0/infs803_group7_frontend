@@ -19,15 +19,18 @@ class _UserInfoState extends ConsumerState<UserInfo> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final user = ref.watch(userStateNotifierProvider(widget.id));
+    final user = ref.watch(userStateNotifierProvider(widget.id - 1));
 
     return user.when(
       data: (User? data) {
         final nameController = TextEditingController(text: data!.name);
         final usernameController = TextEditingController(text: data.username);
 
-        return Material(
-          child: Padding(
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text("User Modify"),
+          ),
+          body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(
               key: _formKey,
@@ -62,7 +65,7 @@ class _UserInfoState extends ConsumerState<UserInfo> {
                       data.username = usernameController.text;
                       ref
                           .read(userRepositoryProvider)
-                          .updateUser(widget.id, data)
+                          .updateUser(widget.id - 1, data)
                           .then(
                         (value) {
                           ref.refresh(userListStateNotifierProvider);
