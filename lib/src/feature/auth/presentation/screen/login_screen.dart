@@ -18,8 +18,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = ref.watch(authStateNotifierProvider).isLoading;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Login"),
@@ -59,14 +57,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               height: 50,
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: ElevatedButton(
-                child: isLoading
-                    ? LoadingAnimationWidget.halfTriangleDot(
-                        color: Colors.white,
-                        size: 30,
-                      )
-                    : const Text('Login'),
+                child: const Text('Login'),
                 onPressed: () {
-                  context.go("/users");
+                  ref
+                      .read(authStateNotifierProvider.notifier)
+                      .login(usernameController.text, passwordController.text)
+                      .then(
+                    (value) {
+                      if (value.statusCode == 200) {
+                        context.go("/users");
+                      } else {
+                        const snackBar = SnackBar(
+                          content: Text("Incorrent username or password"),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
+                    },
+                  );
                 },
               ),
             ),

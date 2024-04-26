@@ -27,7 +27,7 @@ class _ForgetPasswordScreenState extends ConsumerState<ForgetPasswordScreen> {
               alignment: Alignment.center,
               padding: const EdgeInsets.all(10),
               child: const Text(
-                'Sign in',
+                'Forgot password',
                 style: TextStyle(fontSize: 20),
               ),
             ),
@@ -61,12 +61,26 @@ class _ForgetPasswordScreenState extends ConsumerState<ForgetPasswordScreen> {
               height: 50,
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: ElevatedButton(
-                child: const Text('Login'),
+                child: const Text('Reset'),
                 onPressed: () {
-                  // Implement login logic here
                   ref
                       .read(authStateNotifierProvider.notifier)
-                      .forget(usernameController.text, emailController.text);
+                      .forget(
+                        usernameController.text,
+                        emailController.text,
+                      )
+                      .then(
+                    (value) {
+                      if (value.statusCode == 200) {
+                        context.go("/login");
+                      } else {
+                        const snackBar = SnackBar(
+                          content: Text("Email cannot be sent!"),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
+                    },
+                  );
                 },
               ),
             ),

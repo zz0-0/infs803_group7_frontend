@@ -1,3 +1,4 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:infs803_group7_frontend/src/share/token/domain/model/token_manager.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
@@ -10,3 +11,5 @@ final tmdbWithCustomLogs = TMDB(
     'apiReadAccessTokenv4',
   ), //ApiKeys instance with your keys,
 );
+
+const storage = FlutterSecureStorage();

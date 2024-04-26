@@ -1,22 +1,20 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:infs803_group7_frontend/global.dart';
-import 'package:infs803_group7_frontend/src/share/domain/model/user.dart';
 
 abstract class AuthDataSource {
-  Future<String> login(String username, String password);
-  Future<User> register(String username, String password);
+  Future<Response> login(String username, String password);
+  Future<Response> register(String name, String username, String password);
   Future<void> logout();
-  Future<bool> forget(String username, String email);
+  Future<Response> forget(String username, String email);
 }
 
 class AuthRemoteDataSource implements AuthDataSource {
   @override
-  Future<String> login(String username, String password) async {
-    late User user;
+  Future<Response> login(String username, String password) async {
     String token = "";
-    final result = await http.post(
+    final result = await post(
       Uri.parse('$url/login'),
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -28,41 +26,55 @@ class AuthRemoteDataSource implements AuthDataSource {
       final data = await json.decode(result.body) as Map<String, dynamic>;
       // user = User.fromJson(data);
       token = data['token'].toString();
+      storage.write(key: "access_token", value: token);
       // final String token = data['token'].toString();
       // final String refreshToken = data['refresh_token'].toString();
       // final int expiresIn = int.parse(data['expires_in'].toString());
       // tokenManager.setToken(token, refreshToken, expiresIn);
     }
-    return token;
+    return result;
   }
 
   @override
-  Future<User> register(String username, String password) async {
-    late User user;
-    final result = await http.post(
+  Future<Response> register(
+      String name, String username, String password) async {
+    String token = "";
+    final result = await post(
       Uri.parse('$url/register'),
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: json.encode({"username": username, "password": password}),
+      body: json
+          .encode({"name": name, "username": username, "password": password}),
     );
 
     if (result.statusCode == 200) {
       final data = await json.decode(result.body) as Map<String, dynamic>;
-      user = User.fromJson(data);
-      final String token = data['token'].toString();
-      final String refreshToken = data['refresh_token'].toString();
-      final int expiresIn = int.parse(data['expires_in'].toString());
-      tokenManager.setToken(token, refreshToken, expiresIn);
+      token = data['token'].toString();
+      storage.write(key: "access_token", value: token);
+      // user = User.fromJson(data);
+      // final String token = data['token'].toString();
+      // final String refreshToken = data['refresh_token'].toString();
+      // final int expiresIn = int.parse(data['expires_in'].toString());
+      // tokenManager.setToken(token, refreshToken, expiresIn);
     }
-    return user;
+    // return user;
+    return result;
   }
 
   @override
   Future<void> logout() async {}
 
   @override
-  Future<bool> forget(String username, String email) async {
-    return true;
+  Future<Response> forget(String username, String email) async {
+    final result = await post(
+      Uri.parse('$url/forget'),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: json.encode({"username": username, "password": email}),
+    );
+
+    return result;
   }
 }
