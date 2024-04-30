@@ -1,24 +1,22 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/data/repository/movie_list_repository.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/data/repository/movie_repository.dart';
+import 'package:infs803_group7_frontend/src/feature/movie/domain/provider/movie_provider.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/movie.dart';
 
-class MovieListStateNotifier extends StateNotifier<AsyncValue<void>> {
-  final MovieListRepository movieListRepository;
+class MovieListStateNotifier extends StateNotifier<AsyncValue<List<Movie>>> {
+  final Ref ref;
 
-  MovieListStateNotifier({required this.movieListRepository})
-      : super(const AsyncValue.data(null));
+  MovieListStateNotifier(this.ref) : super(const AsyncLoading()) {
+    getMovieList();
+  }
 
-  Future<List<Movie>> getMovieList() async {
-    List<Movie> response = [];
-    try {
-      state = const AsyncValue.loading();
-      response = await movieListRepository.getMovieList();
-    } catch (e) {
-    } finally {
-      state = const AsyncValue.data(null);
-    }
-    return response;
+  Future<void> getMovieList() async {
+    final MovieListRepository movieListRepository =
+        ref.watch(movieListRepositoryProvider);
+    final users = await movieListRepository.getMovieList();
+
+    state = await AsyncValue.guard(() => Future(() => users));
   }
 }
 

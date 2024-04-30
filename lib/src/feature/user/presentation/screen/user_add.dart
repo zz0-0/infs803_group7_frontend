@@ -74,6 +74,7 @@ class _UserAddState extends ConsumerState<UserAdd> {
                     if (int.parse(val!) > 3) {
                       return "Level can only be from 1 to 3";
                     }
+                    return null;
                   },
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),

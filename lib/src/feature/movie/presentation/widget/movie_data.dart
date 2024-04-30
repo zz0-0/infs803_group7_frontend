@@ -52,17 +52,17 @@ class MovieData extends ConsumerWidget {
             .map(
               (e) => DataRow(
                 cells: [
+                  // DataCell(
+                  //   Text(e.id.toString()),
+                  // ),
                   DataCell(
-                    Text(e.id.toString()),
+                    Text(e.names!),
                   ),
                   DataCell(
-                    Text(e.name),
+                    Text(e.score.toString()),
                   ),
                   DataCell(
-                    Text(e.createdAt!.toString()),
-                  ),
-                  DataCell(
-                    Text(e.updatedAt!.toString()),
+                    Text(e.overview.toString()),
                   ),
                 ],
               ),

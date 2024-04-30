@@ -14,9 +14,12 @@ abstract class MovieDataSource {
 class MovieRemoteDataSource implements MovieDataSource {
   @override
   Future<http.Response> createMovie(Movie data) async {
+    final token = await tokenManager.token;
+
     return http.post(
       Uri.parse("$url/movie"),
       headers: {
+        "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
       },
       // headers: {"Authorization": 'Bearer ${tokenManager.token}'},
@@ -26,9 +29,12 @@ class MovieRemoteDataSource implements MovieDataSource {
 
   @override
   Future<http.Response> deleteMovie(int movieId) async {
+    final token = await tokenManager.token;
+
     return http.delete(
-      Uri.parse("$url/movie/$movieId"),
+      Uri.parse("$url/movies/$movieId"),
       headers: {
+        "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
       },
       // headers: {"Authorization": 'Bearer ${tokenManager.token}'},
@@ -37,10 +43,13 @@ class MovieRemoteDataSource implements MovieDataSource {
 
   @override
   Future<Movie> getMovie(int movieId) async {
+    final token = await tokenManager.token;
+
     late Movie movie;
     final result = await http.get(
       Uri.parse("$url/movie/$movieId"),
       headers: {
+        "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
       },
       // headers: {"Authorization": 'Bearer ${tokenManager.token}'},
@@ -49,17 +58,14 @@ class MovieRemoteDataSource implements MovieDataSource {
     if (result.statusCode == 200) {
       final data = json.decode(result.body) as Map<String, dynamic>;
       movie = Movie.fromJson(data);
-    } else if (result.statusCode == 401) {
-      await tokenManager.refreshToken();
-      await getMovie(movieId);
-    }
+    } else if (result.statusCode == 401) {}
     return movie;
   }
 
   @override
   Future<http.Response> updateMovie(int movieId, Movie data) async {
     return http.post(
-      Uri.parse("$url/movie/$movieId"),
+      Uri.parse("$url/movies/$movieId"),
       body: json.encode(data),
     );
   }

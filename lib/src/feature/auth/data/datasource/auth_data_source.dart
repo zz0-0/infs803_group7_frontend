@@ -17,6 +17,7 @@ class AuthRemoteDataSource implements AuthDataSource {
     final result = await post(
       Uri.parse('$url/login'),
       headers: {
+        "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: json.encode({"username": username, "password": password}),
@@ -24,24 +25,24 @@ class AuthRemoteDataSource implements AuthDataSource {
 
     if (result.statusCode == 200) {
       final data = await json.decode(result.body) as Map<String, dynamic>;
-      // user = User.fromJson(data);
       token = data['token'].toString();
-      storage.write(key: "access_token", value: token);
-      // final String token = data['token'].toString();
-      // final String refreshToken = data['refresh_token'].toString();
-      // final int expiresIn = int.parse(data['expires_in'].toString());
-      // tokenManager.setToken(token, refreshToken, expiresIn);
+
+      tokenManager.setToken(token);
     }
     return result;
   }
 
   @override
   Future<Response> register(
-      String name, String username, String password) async {
+    String name,
+    String username,
+    String password,
+  ) async {
     String token = "";
     final result = await post(
       Uri.parse('$url/register'),
       headers: {
+        "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: json
@@ -51,7 +52,7 @@ class AuthRemoteDataSource implements AuthDataSource {
     if (result.statusCode == 200) {
       final data = await json.decode(result.body) as Map<String, dynamic>;
       token = data['token'].toString();
-      storage.write(key: "access_token", value: token);
+      storage.write(key: "access", value: token);
       // user = User.fromJson(data);
       // final String token = data['token'].toString();
       // final String refreshToken = data['refresh_token'].toString();
@@ -67,9 +68,12 @@ class AuthRemoteDataSource implements AuthDataSource {
 
   @override
   Future<Response> forget(String username, String email) async {
+    final token = await tokenManager.token;
+
     final result = await post(
       Uri.parse('$url/forget'),
       headers: {
+        "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: json.encode({"username": username, "password": email}),

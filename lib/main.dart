@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:infs803_group7_frontend/src/feature/auth/presentation/screen/login_screen.dart';
 import 'package:infs803_group7_frontend/src/feature/auth/presentation/screen/register_screen.dart';
+import 'package:infs803_group7_frontend/src/feature/landing/presentation/screen/splash_screen.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/presentation/screen/movie_info.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/presentation/screen/movie_list.dart';
 import 'package:infs803_group7_frontend/src/feature/user/presentation/screen/user_add.dart';
@@ -23,7 +24,7 @@ final _router = GoRouter(
       pageBuilder: (context, state) {
         return CustomTransitionPage(
           key: state.pageKey,
-          child: const LoginScreen(),
+          child: const SplashScreen(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(
               opacity:
@@ -53,7 +54,7 @@ final _router = GoRouter(
       // builder: (context, state) => const MovieList(),
     ),
     GoRoute(
-      path: '/movie/:movieId',
+      path: '/movies/:movieId',
       name: "movie",
       pageBuilder: (context, state) {
         return CustomTransitionPage(
@@ -92,7 +93,7 @@ final _router = GoRouter(
       // builder: (context, state) => const UserList(),
     ),
     GoRoute(
-      path: '/user/:userId',
+      path: '/users/:userId',
       name: "user",
       pageBuilder: (context, state) {
         return CustomTransitionPage(
