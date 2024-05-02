@@ -75,7 +75,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       .then(
                     (value) {
                       if (value.statusCode == 200) {
-                        context.go("/users");
+                        context.push("/users");
                       } else {
                         const snackBar = SnackBar(
                           content: Text("Same username exists!"),
@@ -94,7 +94,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   const Text("Already have an account?"),
                   TextButton(
                     onPressed: () {
-                      context.go("/login");
+                      context.push("/login");
                     },
                     child: const Text('Login'),
                   ),

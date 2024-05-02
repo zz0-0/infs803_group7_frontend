@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:infs803_group7_frontend/src/feature/user/domain/provider/user_provider.dart';
 import 'package:infs803_group7_frontend/src/feature/user/presentation/state/user_state_notifier_provider.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/user.dart';
+import 'package:infs803_group7_frontend/src/share/presentation/widget/logout_widget.dart';
 
 class UserAdd extends ConsumerStatefulWidget {
   const UserAdd({super.key});
@@ -27,6 +28,7 @@ class _UserAddState extends ConsumerState<UserAdd> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("User Add"),
+        actions: const [LogoutWidget()],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -100,7 +102,7 @@ class _UserAddState extends ConsumerState<UserAdd> {
                       .then(
                     (value) {
                       ref.refresh(userListStateNotifierProvider);
-                      context.go("/users");
+                      context.push("/users");
                     },
                   );
                 },

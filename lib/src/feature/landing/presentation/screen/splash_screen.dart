@@ -40,9 +40,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     //       },
     //     );
     if (token != null) {
-      context.go("/users");
+      context.push("/users");
     } else {
-      context.go("/login");
+      context.push("/login");
     }
   }
 

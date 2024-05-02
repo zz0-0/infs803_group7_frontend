@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:infs803_group7_frontend/src/feature/user/domain/provider/user_provider.dart';
 import 'package:infs803_group7_frontend/src/feature/user/presentation/state/user_state_notifier_provider.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/user.dart';
+import 'package:infs803_group7_frontend/src/share/presentation/widget/logout_widget.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class UserInfo extends ConsumerStatefulWidget {
@@ -29,6 +30,7 @@ class _UserInfoState extends ConsumerState<UserInfo> {
         return Scaffold(
           appBar: AppBar(
             title: const Text("User Modify"),
+            actions: const [LogoutWidget()],
           ),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -69,7 +71,7 @@ class _UserInfoState extends ConsumerState<UserInfo> {
                           .then(
                         (value) {
                           ref.refresh(userListStateNotifierProvider);
-                          context.go("/users");
+                          context.push("/users");
                         },
                       );
 

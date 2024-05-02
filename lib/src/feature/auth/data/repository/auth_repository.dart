@@ -5,6 +5,7 @@ abstract class AuthRepository {
   Future<Response> login(String username, String password);
   Future<Response> register(String name, String username, String password);
   Future<Response> forget(String username, String email);
+  Future<bool> logout();
 }
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -25,5 +26,10 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Response> forget(String usename, String email) {
     return authDataSource.forget(usename, email);
+  }
+
+  @override
+  Future<bool> logout() async {
+    return authDataSource.logout();
   }
 }

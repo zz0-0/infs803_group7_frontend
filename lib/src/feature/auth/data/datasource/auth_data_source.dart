@@ -6,18 +6,16 @@ import 'package:infs803_group7_frontend/global.dart';
 abstract class AuthDataSource {
   Future<Response> login(String username, String password);
   Future<Response> register(String name, String username, String password);
-  Future<void> logout();
+  Future<bool> logout();
   Future<Response> forget(String username, String email);
 }
 
 class AuthRemoteDataSource implements AuthDataSource {
   @override
   Future<Response> login(String username, String password) async {
-    String token = "";
     final result = await post(
       Uri.parse('$url/login'),
       headers: {
-        "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: json.encode({"username": username, "password": password}),
@@ -25,9 +23,9 @@ class AuthRemoteDataSource implements AuthDataSource {
 
     if (result.statusCode == 200) {
       final data = await json.decode(result.body) as Map<String, dynamic>;
-      token = data['token'].toString();
-
-      tokenManager.setToken(token);
+      final access = data['access'].toString();
+      final refresh = data['refresh'].toString();
+      tokenManager.setToken(access, refresh);
     }
     return result;
   }
@@ -38,11 +36,9 @@ class AuthRemoteDataSource implements AuthDataSource {
     String username,
     String password,
   ) async {
-    String token = "";
     final result = await post(
       Uri.parse('$url/register'),
       headers: {
-        "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: json
@@ -51,20 +47,17 @@ class AuthRemoteDataSource implements AuthDataSource {
 
     if (result.statusCode == 200) {
       final data = await json.decode(result.body) as Map<String, dynamic>;
-      token = data['token'].toString();
-      storage.write(key: "access", value: token);
-      // user = User.fromJson(data);
-      // final String token = data['token'].toString();
-      // final String refreshToken = data['refresh_token'].toString();
-      // final int expiresIn = int.parse(data['expires_in'].toString());
-      // tokenManager.setToken(token, refreshToken, expiresIn);
+      final access = data['access'].toString();
+      final refresh = data['refresh'].toString();
+      tokenManager.setToken(access, refresh);
     }
-    // return user;
     return result;
   }
 
   @override
-  Future<void> logout() async {}
+  Future<bool> logout() async {
+    return tokenManager.deleteToken();
+  }
 
   @override
   Future<Response> forget(String username, String email) async {

@@ -72,7 +72,7 @@ class _ForgetPasswordScreenState extends ConsumerState<ForgetPasswordScreen> {
                       .then(
                     (value) {
                       if (value.statusCode == 200) {
-                        context.go("/login");
+                        context.push("/login");
                       } else {
                         const snackBar = SnackBar(
                           content: Text("Email cannot be sent!"),
@@ -93,7 +93,7 @@ class _ForgetPasswordScreenState extends ConsumerState<ForgetPasswordScreen> {
                     onPressed: () {
                       // Implement sign-up navigation
                       // Navigator.pushNamed(context, "/register");
-                      context.go("/register");
+                      context.push("/register");
                     },
                     child: const Text('Sign Up'),
                   ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infs803_group7_frontend/src/feature/favorite/presentation/state/favorite_state_notifier_provider.dart';
+import 'package:infs803_group7_frontend/src/share/presentation/widget/logout_widget.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class FavoriteScreen extends ConsumerStatefulWidget {
@@ -20,6 +21,7 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
         return Scaffold(
           appBar: AppBar(
             title: const Text("Movie List"),
+            actions: const [LogoutWidget()],
           ),
           body: ListView.builder(
               scrollDirection: Axis.horizontal,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:infs803_group7_frontend/src/share/presentation/widget/logout_widget.dart';
 
 class MovieInfo extends ConsumerStatefulWidget {
   final int id;
@@ -16,6 +17,7 @@ class _MovieInfoState extends ConsumerState<MovieInfo> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Movie Info"),
+        actions: const [LogoutWidget()],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

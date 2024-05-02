@@ -23,23 +23,46 @@ class TokenManager {
   }
 
   Future<void> setToken(
-    String token,
-    // String refreshToken,
+    String access,
+    String refresh,
     // int expiresIn,
   ) async {
-    // _token = token;
-    // _refreshToken = refreshToken;
-    // _expiryTime = DateTime.now().add(Duration(seconds: expiresIn));
-    // _startExpiryTimer();
+    _token = access;
+    _refreshToken = refresh;
+    _expiryTime = DateTime.now().add(const Duration(seconds: 15 * 60));
+    _startExpiryTimer();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     if (!kIsWeb) {
       await storage.write(
         key: "access",
-        value: token.replaceAll('"', ''),
+        value: access.replaceAll('"', ''),
+      );
+      await storage.write(
+        key: "refresh",
+        value: refresh.replaceAll('"', ''),
       );
     } else {
-      await prefs.setString('access', token.replaceAll('"', ''));
+      await prefs.setString('access', access.replaceAll('"', ''));
+      await prefs.setString('refresh', refresh.replaceAll('"', ''));
     }
+  }
+
+  Future<bool> deleteToken() async {
+    bool isDelete = false;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (!kIsWeb) {
+      await storage.delete(
+        key: "access",
+      );
+      await storage.delete(
+        key: "refresh",
+      );
+      isDelete = true;
+    } else {
+      isDelete = await prefs.remove('access') && await prefs.remove('refresh');
+    }
+
+    return isDelete;
   }
 
   void _startExpiryTimer() {
@@ -48,9 +71,8 @@ class TokenManager {
   }
 
   void _handleTokenExpiry() {
-    _token = null;
-    _refreshToken = null;
-    // Navigate to login screen or handle token refresh
+    deleteToken();
+    refreshToken();
   }
 
   Future<void> refreshToken() async {
@@ -61,16 +83,16 @@ class TokenManager {
           'refresh': _refreshToken!,
         }),
         headers: {
-          "Authorization": 'Bearer $token',
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body) as Map<String, dynamic>;
-        final String newToken = data['token'].toString();
-        final int expiresIn = int.parse(data['expires_in'].toString());
-        // setToken(newToken, _refreshToken!, expiresIn);
+        final access = data['access'].toString();
+        final refresh = data['refresh'].toString();
+
+        setToken(access, refresh);
       } else {
         // Handle token refresh failure
         _handleTokenRefreshFailure();
