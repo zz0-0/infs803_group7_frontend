@@ -19,8 +19,11 @@ class UserListStateNotifier extends StateNotifier<AsyncValue<List<User>>> {
     final UserListRepository userListRepository =
         ref.watch(userListRepositoryProvider);
     final users = await userListRepository.getUserList();
-    final User user = users[users.length - 1];
-    ref.read(userIdProvider.notifier).update((state) => user.id);
+    if (users.isNotEmpty) {
+      final User user = users[users.length - 1];
+      ref.read(userIdProvider.notifier).update((state) => user.id);
+    }
+
     state = await AsyncValue.guard(() => Future(() => users));
   }
 }

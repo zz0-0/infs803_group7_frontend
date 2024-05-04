@@ -1,9 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infs803_group7_frontend/src/feature/favorite/data/repository/favorite_list_repository.dart';
 import 'package:infs803_group7_frontend/src/feature/favorite/presentation/state/favorite_state_notifier_provider.dart';
+import 'package:infs803_group7_frontend/src/share/domain/model/favorite.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/movie.dart';
 
-class FavoriteListStateNotifier extends StateNotifier<AsyncValue<List<Movie>>> {
+class FavoriteListStateNotifier
+    extends StateNotifier<AsyncValue<List<Favorite>>> {
   final Ref ref;
 
   FavoriteListStateNotifier(this.ref) : super(const AsyncLoading()) {

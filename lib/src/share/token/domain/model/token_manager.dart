@@ -80,7 +80,7 @@ class TokenManager {
       final response = await http.post(
         Uri.parse("$url/refresh"),
         body: json.encode({
-          'refresh': _refreshToken!,
+          'refresh_token': _refreshToken!,
         }),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
