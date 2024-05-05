@@ -23,14 +23,26 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
 
-      - name: build gradle
-        run: ./gradlew build
-
-      - name: upload a build artifact
-        uses: actions/upload-artifact@v4.3.3
+      - uses: subosito/flutter-action@v1
         with:
-          name: movie.apk
-          path: app/build/outputs/apk/app-debug.apk
+          flutter-version: '3.19.6'
+
+      - run: flutter pub get
+      - run: flutter build apk --debug --split-per-abi
+      - run: |
+          flutter build ios --no-codesign
+          cd build/ios/iphoneos
+          mkdir Payload
+          cd Payload
+          ln -s ../Runner.app
+          cd ..
+          zip -r app.ipa Payload
+      - run: flutter build web --release
+      # - name: upload a build artifact
+      #   uses: actions/upload-artifact@v4.3.3
+      #   with:
+      #     name: movie.apk
+      #     path: app/build/outputs/apk/app-debug.apk
         
   #     - uses: subosito/flutter-action@v2
   #       with:
