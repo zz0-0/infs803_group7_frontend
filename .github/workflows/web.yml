@@ -2,10 +2,10 @@ name: Web Release
 
 on:
   push:
-    branches:  [ "master" ]
+    branches:  [ "master", "main" ]
 
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master", "main" ]
 
   workflow_dispatch:
 
@@ -38,42 +38,9 @@ jobs:
           cd ..
           zip -r app.ipa Payload
       - run: flutter build web --release
-      # - name: upload a build artifact
-      #   uses: actions/upload-artifact@v4.3.3
-      #   with:
-      #     name: movie.apk
-      #     path: app/build/outputs/apk/app-debug.apk
-        
-  #     - uses: subosito/flutter-action@v2
-  #       with:
-  #         flutter-version: "3.19.6"
-  #         channel: 'stable'
-  #         cache: true
-      
-  #     - name: Get dependencies
-  #       run: flutter pub get
-
-  #     - name: Start Web Release Build
-  #       run: flutter build web --release
-     
-  #     - name: Upload Web Build Files
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: web-release
-  #         path: ./build/web
-
-  # deploy:
-  #   name: Deploy Web Build
-  #   needs: build
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #   - name: Download Web Release
-  #     uses: actions/download-artifact@v2
-  #     with:
-  #       name: web-release
-
-  #   - name: Deploy to gh-pages
-  #     uses: peaceiris/actions-gh-pages@v3
-  #     with:
-  #       publish_dir: ./
+      - name: Push to Releases
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/app/outputs/apk/debug/*,build/ios/iphoneos/app.ipa"
+          tag: v1.0.${{ github.run_number }}
+          token: ${{ secrets.TOKEN }}
