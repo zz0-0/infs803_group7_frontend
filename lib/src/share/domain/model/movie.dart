@@ -12,19 +12,20 @@ class Movie {
   int? score;
   String? status;
 
-  Movie(
-      {this.budgetX,
-      this.country,
-      this.crew,
-      this.dateX,
-      this.genre,
-      this.names,
-      this.origLang,
-      this.origTitle,
-      this.overview,
-      this.revenue,
-      this.score,
-      this.status});
+  Movie({
+    this.budgetX,
+    this.country,
+    this.crew,
+    this.dateX,
+    this.genre,
+    this.names,
+    this.origLang,
+    this.origTitle,
+    this.overview,
+    this.revenue,
+    this.score,
+    this.status,
+  });
 
   Movie.fromJson(Map<String, dynamic> json) {
     budgetX = json['budget_x'] as double;

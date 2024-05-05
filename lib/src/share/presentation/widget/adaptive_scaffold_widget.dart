@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:infs803_group7_frontend/src/share/theme/theme_provider.dart';
 import 'package:layout/layout.dart';
 
 class AdaptiveScaffoldWidget extends ConsumerStatefulWidget {
   final StatefulNavigationShell navigationShell;
-  // final Widget body;
-  // final Widget? floatingActionButton;
 
-  // final String title;
   const AdaptiveScaffoldWidget({
     super.key,
     required this.navigationShell,
-    // required this.title,
+
     // required this.body,
     // this.floatingActionButton,
   });
@@ -29,63 +25,12 @@ class _AdaptiveScaffoldWidgetState
 
   @override
   Widget build(BuildContext context) {
-    // int index = 0;
-
-    // void onIndexSelect(newIndex) {
-    //   setState(() {
-
-    //     index = newIndex as int;
-    //   });
-    // }
-
     void goBranch(int index) {
       widget.navigationShell.goBranch(
         index,
         initialLocation: index == widget.navigationShell.currentIndex,
       );
     }
-
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     actions: [
-    //       IconButton(
-    //         onPressed: () {
-    //           ref.read(themeNotifierProvider.notifier).toggleThemeMode();
-    //         },
-    //         icon: Icon(
-    //           themeMode == ThemeMode.light ? Icons.dark_mode : Icons.light_mode,
-    //         ),
-    //       ),
-    //     ],
-    //     title: Text(
-    //       widget.title,
-    //     ),
-    //   ),
-    //   body: Row(
-    //     children: [
-    //       if (context.layout.breakpoint > LayoutBreakpoint.sm) ...[
-    //         NavigationSideBar(
-    //           selectedIndex: widget.navigationShell.currentIndex,
-    //           onDestinationSelected: goBranch,
-    //         ),
-    //         const VerticalDivider(thickness: 1, width: 1),
-    //       ],
-    //       Expanded(
-    //         child: Padding(
-    //           padding: const EdgeInsets.all(16),
-    //           child: widget.body,
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    //   floatingActionButton: widget.floatingActionButton,
-    //   bottomNavigationBar: context.layout.breakpoint < LayoutBreakpoint.md
-    //       ? NavigationBottomBar(
-    //           selectedIndex: widget.navigationShell.currentIndex,
-    //           onDestinationSelected: goBranch,
-    //         )
-    //       : null,
-    // );
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -149,7 +94,7 @@ class NavigationSideBar extends StatelessWidget {
           const VerticalDivider(thickness: 1, width: 1),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: body,
             ),
           ),

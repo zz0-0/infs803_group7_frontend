@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:infs803_group7_frontend/global.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/favorite.dart';
-import 'package:infs803_group7_frontend/src/share/domain/model/movie.dart';
 
 abstract class FavoriteListDataSource {
   Future<List<Favorite>> getFavoriteList();

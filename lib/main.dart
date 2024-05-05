@@ -47,7 +47,6 @@ final _router = GoRouter(
           },
         );
       },
-      // builder: (context, state) => const LoginScreen(),
     ),
     GoRoute(
       path: '/login',
@@ -64,7 +63,6 @@ final _router = GoRouter(
           },
         );
       },
-      // builder: (context, state) => const LoginScreen(),
     ),
     GoRoute(
       path: '/register',
@@ -81,7 +79,6 @@ final _router = GoRouter(
           },
         );
       },
-      // builder: (context, state) => const RegisterScreen(),
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
@@ -108,32 +105,28 @@ final _router = GoRouter(
                   },
                 );
               },
-              // routes: [
-              //   GoRoute(
-              //     path: ':movieId',
-              //     name: "movie",
-              //     pageBuilder: (context, state) {
-              //       return CustomTransitionPage(
-              //         key: state.pageKey,
-              //         child: MovieInfo(
-              //           id: int.parse(state.pathParameters['movieId']!),
-              //         ),
-              //         transitionsBuilder:
-              //             (context, animation, secondaryAnimation, child) {
-              //           return FadeTransition(
-              //             opacity: CurveTween(curve: Curves.easeInOutCirc)
-              //                 .animate(animation),
-              //             child: child,
-              //           );
-              //         },
-              //       );
-              //     },
-              //     // builder: (context, state) => MovieInfo(
-              //     //   id: int.parse(state.pathParameters['movieId']!),
-              //     // ),
-              //   ),
-              // ],
-              // builder: (context, state) => const MovieList(),
+              routes: [
+                GoRoute(
+                  path: ':movieId',
+                  name: "movie",
+                  pageBuilder: (context, state) {
+                    return CustomTransitionPage(
+                      key: state.pageKey,
+                      child: MovieInfo(
+                        id: int.parse(state.pathParameters['movieId']!),
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(
+                          opacity: CurveTween(curve: Curves.easeInOutCirc)
+                              .animate(animation),
+                          child: child,
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
             ),
           ],
         ),
@@ -156,53 +149,46 @@ final _router = GoRouter(
                   },
                 );
               },
-              // routes: [
-              //   GoRoute(
-              //     path: '/users/:userId',
-              //     name: "user",
-              //     pageBuilder: (context, state) {
-              //       return CustomTransitionPage(
-              //         key: state.pageKey,
-              //         child: UserInfo(
-              //           id: int.parse(state.pathParameters['userId']!),
-              //         ),
-              //         transitionsBuilder:
-              //             (context, animation, secondaryAnimation, child) {
-              //           return FadeTransition(
-              //             opacity: CurveTween(curve: Curves.easeInOutCirc)
-              //                 .animate(animation),
-              //             child: child,
-              //           );
-              //         },
-              //       );
-              //     },
-              //     // builder: (context, state) => UserInfo(
-              //     //   id: int.parse(state.pathParameters['userId']!),
-              //     // ),
-              //   ),
-              //   GoRoute(
-              //     path: '/user_add',
-              //     name: "user_add",
-              //     pageBuilder: (context, state) {
-              //       return CustomTransitionPage(
-              //         key: state.pageKey,
-              //         child: const UserAdd(),
-              //         transitionsBuilder:
-              //             (context, animation, secondaryAnimation, child) {
-              //           return FadeTransition(
-              //             opacity: CurveTween(curve: Curves.easeInOutCirc)
-              //                 .animate(animation),
-              //             child: child,
-              //           );
-              //         },
-              //       );
-              //     },
-              //     // builder: (context, state) => UserInfo(
-              //     //   id: int.parse(state.pathParameters['userId']!),
-              //     // ),
-              //   ),
-              // ],
-              // builder: (context, state) => const UserList(),
+              routes: [
+                GoRoute(
+                  path: ':userId',
+                  name: "user",
+                  pageBuilder: (context, state) {
+                    return CustomTransitionPage(
+                      key: state.pageKey,
+                      child: UserInfo(
+                        id: int.parse(state.pathParameters['userId']!),
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(
+                          opacity: CurveTween(curve: Curves.easeInOutCirc)
+                              .animate(animation),
+                          child: child,
+                        );
+                      },
+                    );
+                  },
+                ),
+                GoRoute(
+                  path: 'user_add',
+                  name: "user_add",
+                  pageBuilder: (context, state) {
+                    return CustomTransitionPage(
+                      key: state.pageKey,
+                      child: const UserAdd(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(
+                          opacity: CurveTween(curve: Curves.easeInOutCirc)
+                              .animate(animation),
+                          child: child,
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
             ),
           ],
         ),

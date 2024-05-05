@@ -12,7 +12,7 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
-  var token;
+  String? token;
 
   @override
   void initState() {

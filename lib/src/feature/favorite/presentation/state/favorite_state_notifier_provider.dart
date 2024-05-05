@@ -3,7 +3,6 @@ import 'package:infs803_group7_frontend/src/feature/favorite/data/datasource/fav
 import 'package:infs803_group7_frontend/src/feature/favorite/data/repository/favorite_list_repository.dart';
 import 'package:infs803_group7_frontend/src/feature/favorite/presentation/state/favorite_state_notifier.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/favorite.dart';
-import 'package:infs803_group7_frontend/src/share/domain/model/movie.dart';
 
 final favoriteListDataSourceProvider =
     Provider((ref) => FavoriteListRemoteDataSource());

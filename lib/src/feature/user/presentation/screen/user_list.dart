@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:infs803_group7_frontend/src/feature/user/presentation/state/user_state_notifier_provider.dart';
-import 'package:infs803_group7_frontend/src/share/presentation/widget/adaptive_scaffold_widget.dart';
-import 'package:infs803_group7_frontend/src/share/presentation/widget/logout_widget.dart';
+import 'package:infs803_group7_frontend/src/share/presentation/widget/adaptive_scaffold_appbar_widget.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class UserList extends ConsumerStatefulWidget {
@@ -22,60 +21,63 @@ class _UserListState extends ConsumerState<UserList> {
     return value.when(
       skipLoadingOnReload: false,
       data: (data) {
-        return ListView.builder(
-          itemCount: data.length,
-          itemBuilder: (BuildContext context, int index) {
-            final user = data[index];
-            return ListTile(
-              leading: CircleAvatar(
-                child: Text(
-                  user.name[0],
+        return AdaptiveScaffoldAppbarWidget(
+          title: "User List",
+          body: ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (BuildContext context, int index) {
+              final user = data[index];
+              return ListTile(
+                leading: CircleAvatar(
+                  child: Text(
+                    user.name[0],
+                  ),
                 ),
-              ),
-              title: Text(
-                "Name: ${user.name}",
-              ),
-              subtitle: Text('Username: ${user.username}'),
-              onTap: () {},
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      context.pushNamed(
-                        "user",
-                        pathParameters: {"userId": user.id.toString()},
-                      );
-                    },
-                    child: const Text('Edit'),
-                  ),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed: () {
-                      user.deleted = true;
-                      ref
-                          .read(
-                            userStateNotifierProvider(user.id - 1).notifier,
-                          )
-                          .updateUser(user)
-                          .then(
-                            (value) =>
-                                ref.refresh(userListStateNotifierProvider),
-                          );
-                    },
-                    child: const Text('Delete'),
-                  ),
-                ],
-              ),
-            );
-          },
+                title: Text(
+                  "Name: ${user.name}",
+                ),
+                subtitle: Text('Username: ${user.username}'),
+                onTap: () {},
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        context.pushNamed(
+                          "user",
+                          pathParameters: {"userId": user.id.toString()},
+                        );
+                      },
+                      child: const Text('Edit'),
+                    ),
+                    const SizedBox(width: 8),
+                    ElevatedButton(
+                      onPressed: () {
+                        user.deleted = true;
+                        ref
+                            .read(
+                              userStateNotifierProvider(user.id - 1).notifier,
+                            )
+                            .updateUser(user)
+                            .then(
+                              (value) =>
+                                  ref.refresh(userListStateNotifierProvider),
+                            );
+                      },
+                      child: const Text('Delete'),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              context.push("/user_add");
+            },
+            child: const Icon(Icons.add),
+          ),
         );
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: () {
-        //     context.push("/user_add");
-        //   },
-        //   child: const Icon(Icons.add),
-        // ),
       },
       error: (Object error, StackTrace stackTrace) {
         return Center(
