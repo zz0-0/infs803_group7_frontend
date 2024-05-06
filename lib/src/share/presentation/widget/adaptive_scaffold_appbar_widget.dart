@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:infs803_group7_frontend/src/share/presentation/widget/logout_widget.dart';
 
 class AdaptiveScaffoldAppbarWidget extends ConsumerStatefulWidget {
   final String title;
@@ -25,6 +26,9 @@ class _AdaptiveScaffoldAppbarWidgetState
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: const [
+          LogoutWidget(),
+        ],
       ),
       body: widget.body,
       floatingActionButton: widget.floatingActionButton,

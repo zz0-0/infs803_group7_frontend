@@ -93,10 +93,7 @@ class NavigationSideBar extends StatelessWidget {
           ),
           const VerticalDivider(thickness: 1, width: 1),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: body,
-            ),
+            child: body,
           ),
         ],
       ),

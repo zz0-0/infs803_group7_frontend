@@ -20,9 +20,18 @@ class MovieListStateNotifier extends StateNotifier<AsyncValue<List<Movie>>> {
   }
 }
 
-class MovieStateNotifier extends StateNotifier<AsyncValue<void>> {
-  final MovieRepository movieRepository;
+class MovieStateNotifier extends StateNotifier<AsyncValue<Movie>> {
+  final Ref ref;
+  final int id;
 
-  MovieStateNotifier({required this.movieRepository})
-      : super(const AsyncValue.data(null));
+  MovieStateNotifier(this.ref, this.id) : super(const AsyncLoading()) {
+    getMovie(id);
+  }
+
+  Future<void> getMovie(int id) async {
+    final MovieRepository movieRepository = ref.watch(movieRepositoryProvider);
+    final movie = await movieRepository.getMovie(id);
+
+    state = await AsyncValue.guard(() => Future(() => movie));
+  }
 }

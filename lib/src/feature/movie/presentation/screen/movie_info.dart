@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:infs803_group7_frontend/src/feature/movie/presentation/state/movie_state_notifier_provider.dart';
+import 'package:infs803_group7_frontend/src/share/domain/model/movie.dart';
 import 'package:infs803_group7_frontend/src/share/presentation/widget/adaptive_scaffold_appbar_widget.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class MovieInfo extends ConsumerStatefulWidget {
   final int id;
@@ -14,33 +17,128 @@ class MovieInfo extends ConsumerStatefulWidget {
 class _MovieInfoState extends ConsumerState<MovieInfo> {
   @override
   Widget build(BuildContext context) {
-    return AdaptiveScaffoldAppbarWidget(
-      title: "Movie Info",
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            const CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage(
-                'assets/profile_image.png',
-              ), // Replace with actual image
+    final movie = ref.watch(movieStateNotifierProvider(widget.id));
+
+    return movie.when(
+      data: (Movie? data) {
+        return AdaptiveScaffoldAppbarWidget(
+          title: "Movie Info",
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                CircleAvatar(
+                  child: Text(
+                    data!.names![0],
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  data.names!,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  data.country!, // Replace with actual email
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  data.crew!,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  data.dateX!,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  data.genre!,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  data.origLang!,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  data.origTitle!,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  data.overview!,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  data.revenue!.toString(),
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  data.score!.toString(),
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  data.status!,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 16),
-            Text(
-              widget.id.toString(),
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'Email: user@example.com', // Replace with actual email
-              style: TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 16),
-            // Add more user details here (bio, location, etc.)
-          ],
-        ),
-      ),
+          ),
+        );
+      },
+      error: (Object error, StackTrace stackTrace) {
+        return Center(
+          child: Text(
+            error.toString(),
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge!
+                .copyWith(color: Colors.red),
+          ),
+        );
+      },
+      loading: () {
+        return LoadingAnimationWidget.halfTriangleDot(
+          color: Colors.deepPurple,
+          size: 100,
+        );
+      },
     );
   }
 }

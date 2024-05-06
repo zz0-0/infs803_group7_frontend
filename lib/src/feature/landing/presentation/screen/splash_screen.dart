@@ -16,7 +16,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     redirect();
   }
@@ -26,19 +25,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
     token = await tokenManager.token;
 
-    // session
-    // token
-    //     .get()
-    //     .then(
-    //       (value) => {
-    //         {context.go("/users")},
-    //       },
-    //     )
-    //     .onError(
-    //       (error, stackTrace) => {
-    //         {context.go("/login")},
-    //       },
-    //     );
     if (token != null) {
       context.go("/movies");
     } else {

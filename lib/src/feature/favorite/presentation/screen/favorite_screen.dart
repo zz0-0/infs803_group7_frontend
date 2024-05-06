@@ -20,42 +20,38 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
       data: (data) {
         return AdaptiveScaffoldAppbarWidget(
           title: "Favorite List",
-          body: ListView.builder(
-            // scrollDirection: Axis.horizontal,
-            itemCount: data.length,
-            itemBuilder: (context, index) {
-              return Card(
-                child: InkWell(
-                  onTap: () {},
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ListView.builder(
+              // scrollDirection: Axis.horizontal,
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: CircleAvatar(
+                    child: Text(
+                      data[index].names![0],
+                    ),
+                  ),
+                  title: Text(
+                    data[index].names!,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  subtitle: Text(
+                    "Rating: ${data[index].score!}",
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  trailing: Row(
                     children: [
-                      ListTile(
-                        leading: CircleAvatar(
-                          child: Text(
-                            data[index].names![0],
-                          ),
-                        ),
-                        title: Text(
-                          data[index].names!,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        subtitle: Text(
-                          "Rating: ${data[index].score!}",
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
                       TextButton(
                         child: const Text('Delete'),
                         onPressed: () {/* ... */},
                       ),
                     ],
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         );
       },

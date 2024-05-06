@@ -54,6 +54,21 @@ class TokenManager {
       await storage.delete(
         key: "access",
       );
+      isDelete = true;
+    } else {
+      isDelete = await prefs.remove('access');
+    }
+
+    return isDelete;
+  }
+
+  Future<bool> deleteAllToken() async {
+    bool isDelete = false;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (!kIsWeb) {
+      await storage.delete(
+        key: "access",
+      );
       await storage.delete(
         key: "refresh",
       );

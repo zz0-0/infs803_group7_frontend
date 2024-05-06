@@ -74,7 +74,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       .then(
                     (value) {
                       if (value.statusCode == 200) {
-                        context.push("/users");
+                        context.push("/movies");
                       } else {
                         const snackBar = SnackBar(
                           content: Text("Same username exists!"),

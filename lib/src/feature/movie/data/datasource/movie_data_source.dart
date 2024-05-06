@@ -17,7 +17,7 @@ class MovieRemoteDataSource implements MovieDataSource {
     final token = await tokenManager.token;
 
     return http.post(
-      Uri.parse("$url/movie"),
+      Uri.parse("$url/movies"),
       headers: {
         "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
@@ -47,7 +47,7 @@ class MovieRemoteDataSource implements MovieDataSource {
 
     late Movie movie;
     final result = await http.get(
-      Uri.parse("$url/movie/$movieId"),
+      Uri.parse("$url/movies/$movieId"),
       headers: {
         "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
