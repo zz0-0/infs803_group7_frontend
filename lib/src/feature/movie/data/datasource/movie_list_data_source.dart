@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:infs803_group7_frontend/global.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/movie.dart';
+import 'package:infs803_group7_frontend/src/share/token/domain/model/token_manager.dart';
 
 abstract class MovieListDataSource {
   Future<List<Movie>> getMovieList();
@@ -29,7 +30,12 @@ class MovieListRemoteDataSource implements MovieListDataSource {
         final u = Movie.fromJson(e as Map<String, dynamic>);
         return u;
       }).toList();
-    } else if (result.statusCode == 401) {}
+    } else if (result.statusCode == 401) {
+      final response = await TokenManager().refreshToken();
+      if (response!.statusCode == 200) {
+        getMovieList();
+      }
+    }
     return movie;
   }
 }

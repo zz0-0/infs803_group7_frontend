@@ -15,8 +15,6 @@ import 'package:infs803_group7_frontend/src/share/presentation/widget/adaptive_s
 import 'package:infs803_group7_frontend/src/share/theme/theme_provider.dart';
 import 'package:layout/layout.dart';
 
-// import 'package:infs803_group7_frontend/src/feature/user/presentation/screen/user_login.dart';
-
 void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
@@ -211,20 +209,12 @@ final _router = GoRouter(
                   },
                 );
               },
-              // builder: (context, state) => const UserList(),
             ),
           ],
         ),
       ],
     ),
   ],
-  // redirect: (context, state) {
-  //   if (AuthState.of(context).isSignedIn) {
-  //     return '/signin';
-  //   } else {
-  //     return null;
-  //   }
-  // },
 );
 
 class MyApp extends ConsumerWidget {

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:infs803_group7_frontend/global.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/favorite.dart';
+import 'package:infs803_group7_frontend/src/share/token/domain/model/token_manager.dart';
 
 abstract class FavoriteListDataSource {
   Future<List<Favorite>> getFavoriteList();
@@ -28,9 +29,14 @@ class FavoriteListRemoteDataSource implements FavoriteListDataSource {
       return dataList.map((e) {
         final u = Favorite.fromJson(e as Map<String, dynamic>);
         return u;
-      }).toList();
+      })
+          // .where((e) => e.deleted != true)
+          .toList();
     } else if (result.statusCode == 401) {
-      return movie;
+      final response = await TokenManager().refreshToken();
+      if (response!.statusCode == 200) {
+        getFavoriteList();
+      }
     }
     return movie;
   }

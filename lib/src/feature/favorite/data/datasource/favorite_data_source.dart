@@ -5,7 +5,7 @@ import 'package:infs803_group7_frontend/global.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/favorite.dart';
 
 abstract class FavoriteDataSource {
-  Future<http.Response> createFavorite(Favorite data);
+  Future<http.Response> createFavorite(int favoriteId, Favorite data);
   Future<Favorite> getFavorite(int favoriteId);
   Future<http.Response> updateFavorite(int favoriteId, Favorite data);
   Future<http.Response> deleteFavorite(int favoriteId);
@@ -13,11 +13,11 @@ abstract class FavoriteDataSource {
 
 class FavoriteRemoteDataSource implements FavoriteDataSource {
   @override
-  Future<http.Response> createFavorite(Favorite data) async {
+  Future<http.Response> createFavorite(int favoriteId, Favorite data) async {
     final token = await tokenManager.token;
 
     return http.post(
-      Uri.parse("$url/favorites"),
+      Uri.parse("$url/favorites/$favoriteId"),
       headers: {
         "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',

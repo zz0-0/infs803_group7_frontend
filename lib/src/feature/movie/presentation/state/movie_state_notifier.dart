@@ -1,7 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:infs803_group7_frontend/src/feature/favorite/data/repository/favorite_list_repository.dart';
+import 'package:infs803_group7_frontend/src/feature/favorite/domain/provider/favorite_provider.dart';
+import 'package:infs803_group7_frontend/src/feature/favorite/presentation/state/favorite_state_notifier_provider.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/data/repository/movie_list_repository.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/data/repository/movie_repository.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/domain/provider/movie_provider.dart';
+import 'package:infs803_group7_frontend/src/share/domain/model/favorite.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/movie.dart';
 
 class MovieListStateNotifier extends StateNotifier<AsyncValue<List<Movie>>> {
@@ -15,6 +19,13 @@ class MovieListStateNotifier extends StateNotifier<AsyncValue<List<Movie>>> {
     final MovieListRepository movieListRepository =
         ref.watch(movieListRepositoryProvider);
     final users = await movieListRepository.getMovieList();
+    final FavoriteListRepository favoriteListRepository =
+        ref.watch(favoriteListRepositoryProvider);
+    final favorites = await favoriteListRepository.getFavoriteList();
+
+    if (favorites.isNotEmpty) {
+      ref.read(favoriteIdProvider.notifier).update((state) => favorites.length);
+    }
 
     state = await AsyncValue.guard(() => Future(() => users));
   }

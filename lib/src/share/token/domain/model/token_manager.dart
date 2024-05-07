@@ -6,8 +6,8 @@ import 'package:infs803_group7_frontend/global.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TokenManager {
-  String? _token;
-  String? _refreshToken;
+  static String? _token;
+  static String? _refreshToken;
   late DateTime _expiryTime;
   late Timer _expiryTimer;
 
@@ -90,7 +90,7 @@ class TokenManager {
     refreshToken();
   }
 
-  Future<void> refreshToken() async {
+  Future<http.Response?> refreshToken() async {
     if (_refreshToken != null) {
       final response = await http.post(
         Uri.parse("$url/refresh"),
@@ -106,15 +106,14 @@ class TokenManager {
         final data = json.decode(response.body) as Map<String, dynamic>;
         final access = data['access'].toString();
         final refresh = data['refresh'].toString();
-
         setToken(access, refresh);
+        return response;
       } else {
         // Handle token refresh failure
         _handleTokenRefreshFailure();
       }
-    } else {
-      // Navigate to login screen or handle token refresh
     }
+    return null;
   }
 
   void _handleTokenRefreshFailure() {

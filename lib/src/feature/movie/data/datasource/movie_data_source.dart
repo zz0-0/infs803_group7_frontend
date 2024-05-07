@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:infs803_group7_frontend/global.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/movie.dart';
+import 'package:infs803_group7_frontend/src/share/token/domain/model/token_manager.dart';
 
 abstract class MovieDataSource {
   Future<http.Response> createMovie(Movie data);
@@ -58,7 +59,12 @@ class MovieRemoteDataSource implements MovieDataSource {
     if (result.statusCode == 200) {
       final data = json.decode(result.body) as Map<String, dynamic>;
       movie = Movie.fromJson(data);
-    } else if (result.statusCode == 401) {}
+    } else if (result.statusCode == 401) {
+      final response = await TokenManager().refreshToken();
+      if (response!.statusCode == 200) {
+        getMovie(movieId);
+      }
+    }
     return movie;
   }
 

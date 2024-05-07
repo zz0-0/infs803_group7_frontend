@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:infs803_group7_frontend/global.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/user.dart';
+import 'package:infs803_group7_frontend/src/share/token/domain/model/token_manager.dart';
 
 abstract class UserDataSource {
   Future<http.Response> createUser(int userId, User data);
@@ -54,7 +55,12 @@ class UserRemoteDataSource implements UserDataSource {
     if (result.statusCode == 200) {
       final data = json.decode(result.body) as Map<String, dynamic>;
       user = User.fromJson(data);
-    } else if (result.statusCode == 401) {}
+    } else if (result.statusCode == 401) {
+      final response = await TokenManager().refreshToken();
+      if (response!.statusCode == 200) {
+        getUser(userId);
+      }
+    }
     return user;
   }
 

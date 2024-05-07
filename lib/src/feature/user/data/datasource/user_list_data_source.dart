@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:infs803_group7_frontend/global.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/user.dart';
+import 'package:infs803_group7_frontend/src/share/token/domain/model/token_manager.dart';
 
 abstract class UserListDataSource {
   Future<List<User>> getUserList();
@@ -12,8 +12,6 @@ abstract class UserListDataSource {
 class UserListRemoteDataSource implements UserListDataSource {
   @override
   Future<List<User>> getUserList() async {
-    final container = ProviderContainer();
-
     final token = await tokenManager.token;
 
     final result = await http.get(
@@ -35,7 +33,12 @@ class UserListRemoteDataSource implements UserListDataSource {
           })
           .where((e) => e.deleted != true)
           .toList();
-    } else if (result.statusCode == 401) {}
+    } else if (result.statusCode == 401) {
+      final response = await TokenManager().refreshToken();
+      if (response!.statusCode == 200) {
+        getUserList();
+      }
+    }
     return users;
   }
 }

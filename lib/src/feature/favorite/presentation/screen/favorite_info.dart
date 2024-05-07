@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:infs803_group7_frontend/src/feature/movie/presentation/state/movie_state_notifier_provider.dart';
-import 'package:infs803_group7_frontend/src/share/domain/model/movie.dart';
+import 'package:infs803_group7_frontend/src/feature/favorite/presentation/state/favorite_state_notifier_provider.dart';
+import 'package:infs803_group7_frontend/src/share/domain/model/favorite.dart';
 import 'package:infs803_group7_frontend/src/share/presentation/widget/adaptive_scaffold_appbar_widget.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-class MovieInfo extends ConsumerStatefulWidget {
+class FavoriteInfo extends ConsumerStatefulWidget {
   final int id;
 
-  const MovieInfo({super.key, required this.id});
+  const FavoriteInfo({super.key, required this.id});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _MovieInfoState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _FavoriteInfoState();
 }
 
-class _MovieInfoState extends ConsumerState<MovieInfo> {
+class _FavoriteInfoState extends ConsumerState<FavoriteInfo> {
   @override
   Widget build(BuildContext context) {
-    final movie = ref.watch(movieStateNotifierProvider(widget.id));
+    final favorite = ref.watch(favoriteStateNotifierProvider(widget.id));
 
-    return movie.when(
-      data: (Movie? data) {
+    return favorite.when(
+      data: (Favorite? data) {
         return AdaptiveScaffoldAppbarWidget(
-          title: "Movie Info",
+          title: "Favorite Info",
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: ListView(

@@ -3,7 +3,7 @@ import 'package:infs803_group7_frontend/src/feature/favorite/data/datasource/fav
 import 'package:infs803_group7_frontend/src/share/domain/model/favorite.dart';
 
 abstract class FavoriteRepository {
-  Future<http.Response> createFavorite(Favorite data);
+  Future<http.Response> createFavorite(int favoriteId, Favorite data);
   Future<Favorite> getFavorite(int favoriteId);
   Future<http.Response> updateFavorite(int favoriteId, Favorite data);
   Future<http.Response> deleteFavorite(int favoriteId);
@@ -15,8 +15,8 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   FavoriteRepositoryImpl(this.favoriteDataSource);
 
   @override
-  Future<http.Response> createFavorite(Favorite data) async {
-    return favoriteDataSource.createFavorite(data);
+  Future<http.Response> createFavorite(int favoriteId, Favorite data) async {
+    return favoriteDataSource.createFavorite(favoriteId, data);
   }
 
   @override

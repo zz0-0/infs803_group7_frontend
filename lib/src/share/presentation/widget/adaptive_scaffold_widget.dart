@@ -9,9 +9,6 @@ class AdaptiveScaffoldWidget extends ConsumerStatefulWidget {
   const AdaptiveScaffoldWidget({
     super.key,
     required this.navigationShell,
-
-    // required this.body,
-    // this.floatingActionButton,
   });
 
   @override
@@ -77,17 +74,17 @@ class NavigationSideBar extends StatelessWidget {
               NavigationRailDestination(
                 icon: Icon(Icons.favorite_border),
                 selectedIcon: Icon(Icons.favorite),
-                label: Text('First'),
+                label: Text('Movies'),
               ),
               NavigationRailDestination(
                 icon: Icon(Icons.bookmark_border),
                 selectedIcon: Icon(Icons.book),
-                label: Text('Second'),
+                label: Text('Users'),
               ),
               NavigationRailDestination(
                 icon: Icon(Icons.star_border),
                 selectedIcon: Icon(Icons.star),
-                label: Text('Third'),
+                label: Text('Favorites'),
               ),
             ],
           ),
@@ -124,17 +121,17 @@ class NavigationBottomBar extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite_border),
             activeIcon: Icon(Icons.favorite),
-            label: 'First',
+            label: 'Movies',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.bookmark_border),
             activeIcon: Icon(Icons.book),
-            label: 'Second',
+            label: 'Users',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.star_border),
             activeIcon: Icon(Icons.star),
-            label: 'Third',
+            label: 'Favorites',
           ),
         ],
       ),
