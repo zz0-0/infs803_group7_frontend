@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:infs803_group7_frontend/src/feature/auth/domain/provider/auth_provider.dart';
 import 'package:infs803_group7_frontend/src/feature/favorite/domain/provider/favorite_provider.dart';
 import 'package:infs803_group7_frontend/src/feature/favorite/presentation/state/favorite_state_notifier_provider.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/presentation/state/movie_state_notifier_provider.dart';
@@ -21,6 +22,15 @@ class _MovieListState extends ConsumerState<MovieList> {
     final value = ref.watch(movieListStateNotifierProvider);
     final id = ref.watch(favoriteIdProvider);
     // return Container();
+    Widget? floating;
+    if (ref.watch(adminProvider) == false) {
+      floating = FloatingActionButton(
+        onPressed: () {
+          // TODO
+        },
+      );
+    }
+
     return value.when(
       skipLoadingOnReload: false,
       data: (data) {
@@ -65,30 +75,31 @@ class _MovieListState extends ConsumerState<MovieList> {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        TextButton(
-                          child: const Text('Add to favorites'),
-                          onPressed: () {
-                            final favorite = Favorite(
-                              budgetX: data[index].budgetX,
-                              country: data[index].country,
-                              crew: data[index].crew,
-                              dateX: data[index].dateX,
-                              genre: data[index].genre,
-                              names: data[index].names,
-                              origLang: data[index].origLang,
-                              origTitle: data[index].origTitle,
-                              overview: data[index].overview,
-                              revenue: data[index].revenue,
-                              score: data[index].score,
-                              status: data[index].status,
-                              deleted: false,
-                            );
+                        if (ref.watch(adminProvider) == false)
+                          TextButton(
+                            child: const Text('Add to favorites'),
+                            onPressed: () {
+                              final favorite = Favorite(
+                                budgetX: data[index].budgetX,
+                                country: data[index].country,
+                                crew: data[index].crew,
+                                dateX: data[index].dateX,
+                                genre: data[index].genre,
+                                names: data[index].names,
+                                origLang: data[index].origLang,
+                                origTitle: data[index].origTitle,
+                                overview: data[index].overview,
+                                revenue: data[index].revenue,
+                                score: data[index].score,
+                                status: data[index].status,
+                                deleted: false,
+                              );
 
-                            ref
-                                .read(favoriteRepositoryProvider)
-                                .createFavorite(id, favorite);
-                          },
-                        ),
+                              ref
+                                  .read(favoriteRepositoryProvider)
+                                  .createFavorite(id, favorite);
+                            },
+                          ),
                       ],
                     ),
                   ),
@@ -96,6 +107,7 @@ class _MovieListState extends ConsumerState<MovieList> {
               },
             ),
           ),
+          floatingActionButton: floating,
         );
       },
       error: (Object error, StackTrace stackTrace) {

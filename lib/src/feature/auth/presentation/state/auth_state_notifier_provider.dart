@@ -6,8 +6,7 @@ import 'package:infs803_group7_frontend/src/feature/auth/presentation/state/auth
 
 final authStateNotifierProvider =
     StateNotifierProvider<AuthStateNotifier, AsyncValue<Response>>((ref) {
-  final AuthRepository authRepository = ref.watch(authRepositoryProvider);
-  return AuthStateNotifier(authRepository: authRepository);
+  return AuthStateNotifier(ref);
 });
 
 // final loginFutureProvider = Provider(

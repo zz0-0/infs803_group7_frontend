@@ -10,3 +10,5 @@ final authRepositoryProvider = Provider(
     return AuthRepositoryImpl(authDataSource);
   },
 );
+
+final adminProvider = StateProvider((ref) => false);

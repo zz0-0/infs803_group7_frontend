@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:infs803_group7_frontend/src/feature/auth/domain/provider/auth_provider.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/presentation/state/movie_state_notifier_provider.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/movie.dart';
 import 'package:infs803_group7_frontend/src/share/presentation/widget/adaptive_scaffold_appbar_widget.dart';
@@ -29,10 +30,28 @@ class _MovieInfoState extends ConsumerState<MovieInfo> {
               children: [
                 Column(
                   children: [
-                    CircleAvatar(
-                      child: Text(
-                        data!.names![0],
-                      ),
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          child: Text(
+                            data!.names![0],
+                          ),
+                        ),
+                        if (ref.watch(adminProvider) == true)
+                          TextButton(
+                            onPressed: () {
+                              // TODO
+                            },
+                            child: const Text('Modify'),
+                          ),
+                        if (ref.watch(adminProvider) == true)
+                          TextButton(
+                            onPressed: () {
+                              // TODO
+                            },
+                            child: const Text('Delete'),
+                          ),
+                      ],
                     ),
                     const SizedBox(height: 16),
                     Text(

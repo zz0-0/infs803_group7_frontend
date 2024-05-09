@@ -5,7 +5,6 @@ import 'package:infs803_group7_frontend/src/feature/favorite/presentation/state/
 import 'package:infs803_group7_frontend/src/feature/movie/data/repository/movie_list_repository.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/data/repository/movie_repository.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/domain/provider/movie_provider.dart';
-import 'package:infs803_group7_frontend/src/share/domain/model/favorite.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/movie.dart';
 
 class MovieListStateNotifier extends StateNotifier<AsyncValue<List<Movie>>> {
