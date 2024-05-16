@@ -76,7 +76,9 @@ class _UserListState extends ConsumerState<UserList> {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              context.push("/user_add");
+              context.pushNamed(
+                "user_add",
+              );
             },
             child: const Icon(Icons.add),
           ),
