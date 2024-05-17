@@ -75,6 +75,35 @@ class _MovieListState extends ConsumerState<MovieList> {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
+                      //  if (ref.watch(adminProvider) == true)
+                      //     ElevatedButton(
+                      //   onPressed: () {
+                      //     context.pushNamed(
+                      //       "movie",
+                      //       pathParameters: {"movieId": index.toString()},
+                      //     );
+                      //   },
+                      //   child: const Text('View'),
+                      // ),
+                         
+                         
+                      //     // TextButton(
+                      //     //   onPressed: () {
+                      //     //      context.pushNamed(
+                      //     //   "movie",
+                      //     //   pathParameters: {"MovieID": index.toString()},
+                      //     // );
+                      //     //   },  
+                      //     //   child: const Text('Modify'),
+                      //     // ),
+                        if (ref.watch(adminProvider) == true)
+                          TextButton(
+                            onPressed: () {
+                              // TODO
+                            },
+                            child: const Text('Delete'),
+                          ),
+                       
                         if (ref.watch(adminProvider) == false)
                           TextButton(
                             child: const Text('Add to favorites'),

@@ -159,8 +159,13 @@ class MovieAddState extends ConsumerState<MovieAdd>{
                   
 
                   ref
-                      .read(movieRepositoryProvider);
-                      
+                      .read(movieRepositoryProvider)
+                      .updateMovie(ref.watch(movieIDProvider), movie)
+                      .then((value){
+                       ref.refresh(movieListDataSourceProvider);
+                      context.push("/movies");
+                      },
+                      );
                 },
                 child: const Text('Submit'),
               ),

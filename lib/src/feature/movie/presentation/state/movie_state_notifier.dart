@@ -5,7 +5,9 @@ import 'package:infs803_group7_frontend/src/feature/favorite/presentation/state/
 import 'package:infs803_group7_frontend/src/feature/movie/data/repository/movie_list_repository.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/data/repository/movie_repository.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/domain/provider/movie_provider.dart';
+import 'package:infs803_group7_frontend/src/feature/movie/presentation/state/movie_state_notifier_provider.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/movie.dart';
+import 'package:tmdb_api/tmdb_api.dart';
 
 class MovieListStateNotifier extends StateNotifier<AsyncValue<List<Movie>>> {
   final Ref ref;
@@ -17,7 +19,7 @@ class MovieListStateNotifier extends StateNotifier<AsyncValue<List<Movie>>> {
   Future<void> getMovieList() async {
     final MovieListRepository movieListRepository =
         ref.watch(movieListRepositoryProvider);
-    final users = await movieListRepository.getMovieList();
+    final movies = await movieListRepository.getMovieList();
     final FavoriteListRepository favoriteListRepository =
         ref.watch(favoriteListRepositoryProvider);
     final favorites = await favoriteListRepository.getFavoriteList();
@@ -25,8 +27,10 @@ class MovieListStateNotifier extends StateNotifier<AsyncValue<List<Movie>>> {
     if (favorites.isNotEmpty) {
       ref.read(favoriteIdProvider.notifier).update((state) => favorites.length);
     }
-
-    state = await AsyncValue.guard(() => Future(() => users));
+ if (movies.isNotEmpty) {
+      ref.read(movieIDProvider.notifier).update((state) => movies.length);
+    }
+    state = await AsyncValue.guard(() => Future(() => movies));
   }
 }
 

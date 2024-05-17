@@ -38,23 +38,7 @@ class _MovieInfoState extends ConsumerState<MovieInfo> {
                             data!.names![0],
                           ),
                         ),
-                        if (ref.watch(adminProvider) == true)
-                          TextButton(
-                            onPressed: () {
-                               context.pushNamed(
-                            "movie",
-                            pathParameters: {"MovieID": widget.id.toString()},
-                          );
-                            },  
-                            child: const Text('Modify'),
-                          ),
-                        if (ref.watch(adminProvider) == true)
-                          TextButton(
-                            onPressed: () {
-                              // TODO
-                            },
-                            child: const Text('Delete'),
-                          ),
+                        
                       ],
                     ),
                     const SizedBox(height: 16),

@@ -8,27 +8,10 @@ final movieListStateNotifierProvider =
   return MovieListStateNotifier(ref);
 });
 
-// final movieListStateNotifierProvider =
-//     StateNotifierProvider<MovieListStateNotifier, AsyncValue>((ref) {
-//   final MovieListRepository movieListRepository =
-//       ref.watch(movieListRepositoryProvider);
-//   return MovieListStateNotifier(movieListRepository: movieListRepository);
-// });
-
 final movieStateNotifierProvider =
     StateNotifierProvider.family<MovieStateNotifier, AsyncValue<Movie>, int>(
         (ref, id) {
   return MovieStateNotifier(ref, id);
 });
 
-// final movieListStreamProvider = StreamProvider((ref) {
-//   final MovieListRepository movieListRepository =
-//       ref.watch(movieListRepositoryProvider);
-//   return Stream.fromFuture(movieListRepository.getMovieList());
-// });
-
-// final movieDeleteStreamProvider =
-//     StreamProviderFamily<Response, int>((ref, id) {
-//   final MovieRepository movieRepository = ref.watch(movieRepositoryProvider);
-//   return Stream.fromFuture(movieRepository.deleteMovie(id));
-// });
+final movieIDProvider = StateProvider((ref) => 0);

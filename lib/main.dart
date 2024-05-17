@@ -9,7 +9,7 @@ import 'package:infs803_group7_frontend/src/feature/landing/presentation/screen/
 import 'package:infs803_group7_frontend/src/feature/movie/presentation/screen/movie_info.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/presentation/screen/movie_list.dart';
 import 'package:infs803_group7_frontend/src/feature/user/presentation/screen/user_add.dart';
-import 'package:infs803_group7_frontend/src/feature/user/presentation/screen/user_info.dart';
+import 'package:infs803_group7_frontend/src/feature/user/presentation/screen/user_edit.dart';
 import 'package:infs803_group7_frontend/src/feature/user/presentation/screen/user_list.dart';
 import 'package:infs803_group7_frontend/src/share/presentation/widget/adaptive_scaffold_widget.dart';
 import 'package:infs803_group7_frontend/src/share/theme/theme_provider.dart';
@@ -124,6 +124,26 @@ final _router = GoRouter(
                     );
                   },
                 ),
+                  GoRoute(
+                  path: ':movieId',
+                  name: "movie",
+                  pageBuilder: (context, state) {
+                    return CustomTransitionPage(
+                      key: state.pageKey,
+                      child: MovieEdit(
+                        id: int.parse(state.pathParameters['movieId']!),
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(
+                          opacity: CurveTween(curve: Curves.easeInOutCirc)
+                              .animate(animation),
+                          child: child,
+                        );
+                      },
+                    );
+                  },
+                ),
               ],
             ),
           ],
@@ -154,7 +174,7 @@ final _router = GoRouter(
                   pageBuilder: (context, state) {
                     return CustomTransitionPage(
                       key: state.pageKey,
-                      child: UserInfo(
+                      child: UserEdit(
                         id: int.parse(state.pathParameters['userId']!),
                       ),
                       transitionsBuilder:
