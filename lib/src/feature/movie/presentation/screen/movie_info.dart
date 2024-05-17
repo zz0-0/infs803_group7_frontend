@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:infs803_group7_frontend/src/feature/auth/domain/provider/auth_provider.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/presentation/state/movie_state_notifier_provider.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/movie.dart';
@@ -40,8 +41,11 @@ class _MovieInfoState extends ConsumerState<MovieInfo> {
                         if (ref.watch(adminProvider) == true)
                           TextButton(
                             onPressed: () {
-                              // TODO
-                            },
+                               context.pushNamed(
+                            "movie",
+                            pathParameters: {"MovieID": widget.id.toString()},
+                          );
+                            },  
                             child: const Text('Modify'),
                           ),
                         if (ref.watch(adminProvider) == true)
@@ -111,13 +115,6 @@ class _MovieInfoState extends ConsumerState<MovieInfo> {
                     const SizedBox(height: 8),
                     Text(
                       "Score: ${data.score!}",
-                      style: const TextStyle(
-                        fontSize: 24,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "Status: ${data.status!}",
                       style: const TextStyle(
                         fontSize: 24,
                       ),

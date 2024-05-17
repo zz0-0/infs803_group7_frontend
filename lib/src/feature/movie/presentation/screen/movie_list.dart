@@ -45,14 +45,14 @@ class _MovieListState extends ConsumerState<MovieList> {
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 20,
               ),
-              itemCount: data.length,
-              itemBuilder: (context, index) {
+               itemCount: data.length,
+               itemBuilder: (context, index) {
                 return Card(
                   child: InkWell(
                     onTap: () {
-                      context.pushNamed(
-                        "movie",
-                        pathParameters: {"movieId": index.toString()},
+                       context.pushNamed(
+                         "movie",
+                         pathParameters: {"movieId": index.toString()},
                       );
                     },
                     child: Column(
@@ -91,7 +91,7 @@ class _MovieListState extends ConsumerState<MovieList> {
                                 overview: data[index].overview,
                                 revenue: data[index].revenue,
                                 score: data[index].score,
-                                status: data[index].status,
+                                // status: data[index].status,
                                 deleted: false,
                               );
 
