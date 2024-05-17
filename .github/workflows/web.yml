@@ -26,7 +26,6 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: '3.19.6'
-          token: ${{ secrets.TOKEN }}
 
       - run: flutter pub get
       - run: flutter build apk --debug --split-per-abi
@@ -36,4 +35,4 @@ jobs:
         with:
           artifacts: "build/app/outputs/apk/debug/*"
           tag: v1.0.${{ github.run_number }}
-          token: ${{ secrets.TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
