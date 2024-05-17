@@ -23,7 +23,6 @@ class UserListStateNotifier extends StateNotifier<AsyncValue<List<User>>> {
       final User user = users[users.length - 1];
       ref.read(userIdProvider.notifier).update((state) => user.id);
     }
-
     state = await AsyncValue.guard(() => Future(() => users));
   }
 }

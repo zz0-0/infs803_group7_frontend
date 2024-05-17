@@ -39,14 +39,19 @@ class _UserListState extends ConsumerState<UserList> {
                     "Name: ${user.name}",
                   ),
                   subtitle: Text('Username: ${user.username}'),
-                  onTap: () {},
+                  onTap: () {
+                    context.pushNamed(
+                      "user_info",
+                      pathParameters: {"userId": user.id.toString()},
+                    );
+                  },
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       ElevatedButton(
                         onPressed: () {
                           context.pushNamed(
-                            "user",
+                            "user_edit",
                             pathParameters: {"userId": user.id.toString()},
                           );
                         },

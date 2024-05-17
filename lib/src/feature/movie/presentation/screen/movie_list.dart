@@ -26,7 +26,9 @@ class _MovieListState extends ConsumerState<MovieList> {
     if (ref.watch(adminProvider) == false) {
       floating = FloatingActionButton(
         onPressed: () {
-          // TODO
+          context.pushNamed(
+            "movie_add",
+          );
         },
       );
     }
@@ -39,20 +41,21 @@ class _MovieListState extends ConsumerState<MovieList> {
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 200,
-                childAspectRatio: 3 / 2,
+                childAspectRatio:
+                    ref.watch(adminProvider) == true ? (3 / 3) : (3 / 2.5),
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 20,
               ),
-               itemCount: data.length,
-               itemBuilder: (context, index) {
+              itemCount: data.length,
+              itemBuilder: (context, index) {
                 return Card(
                   child: InkWell(
                     onTap: () {
-                       context.pushNamed(
-                         "movie",
-                         pathParameters: {"movieId": index.toString()},
+                      context.pushNamed(
+                        "movie_info",
+                        pathParameters: {"movieId": index.toString()},
                       );
                     },
                     child: Column(
@@ -75,27 +78,16 @@ class _MovieListState extends ConsumerState<MovieList> {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                      //  if (ref.watch(adminProvider) == true)
-                      //     ElevatedButton(
-                      //   onPressed: () {
-                      //     context.pushNamed(
-                      //       "movie",
-                      //       pathParameters: {"movieId": index.toString()},
-                      //     );
-                      //   },
-                      //   child: const Text('View'),
-                      // ),
-                         
-                         
-                      //     // TextButton(
-                      //     //   onPressed: () {
-                      //     //      context.pushNamed(
-                      //     //   "movie",
-                      //     //   pathParameters: {"MovieID": index.toString()},
-                      //     // );
-                      //     //   },  
-                      //     //   child: const Text('Modify'),
-                      //     // ),
+                        if (ref.watch(adminProvider) == true)
+                          ElevatedButton(
+                            onPressed: () {
+                              context.pushNamed(
+                                "movie_edit",
+                                pathParameters: {"movieId": index.toString()},
+                              );
+                            },
+                            child: const Text('Modify'),
+                          ),
                         if (ref.watch(adminProvider) == true)
                           TextButton(
                             onPressed: () {
@@ -103,7 +95,6 @@ class _MovieListState extends ConsumerState<MovieList> {
                             },
                             child: const Text('Delete'),
                           ),
-                       
                         if (ref.watch(adminProvider) == false)
                           TextButton(
                             child: const Text('Add to favorites'),

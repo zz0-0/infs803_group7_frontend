@@ -63,7 +63,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       .then(
                     (value) {
                       if (value.statusCode == 200) {
-                        context.push("/movies");
+                        context.go("/movies");
                       } else {
                         const snackBar = SnackBar(
                           content: Text("Incorrent username or password"),
@@ -82,7 +82,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   const Text("Don't have an account?"),
                   TextButton(
                     onPressed: () {
-                      context.push("/register");
+                      context.go("/register");
                     },
                     child: const Text('Sign Up'),
                   ),

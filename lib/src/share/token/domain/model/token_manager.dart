@@ -29,7 +29,7 @@ class TokenManager {
   ) async {
     _token = access;
     _refreshToken = refresh;
-    _expiryTime = DateTime.now().add(const Duration(seconds: 15 * 60));
+    _expiryTime = DateTime.now().add(const Duration(seconds: 10 * 60));
     _startExpiryTimer();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     if (!kIsWeb) {
