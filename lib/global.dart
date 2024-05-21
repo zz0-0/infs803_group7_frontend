@@ -2,7 +2,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:infs803_group7_frontend/src/share/token/domain/model/token_manager.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
-const String url = "https://polite-hill-0009b2000.5.azurestaticapps.net";
+const String url = "https://rustwebapp.happywave-d1214138.australiaeast.azurecontainerapps.io/";
 final TokenManager tokenManager = TokenManager();
 final tmdbWithCustomLogs = TMDB(
   //TMDB instance
