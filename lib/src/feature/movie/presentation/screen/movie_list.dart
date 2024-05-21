@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:infs803_group7_frontend/src/feature/auth/domain/provider/auth_provider.dart';
 import 'package:infs803_group7_frontend/src/feature/favorite/domain/provider/favorite_provider.dart';
 import 'package:infs803_group7_frontend/src/feature/favorite/presentation/state/favorite_state_notifier_provider.dart';
+import 'package:infs803_group7_frontend/src/feature/movie/domain/provider/movie_provider.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/presentation/state/movie_state_notifier_provider.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/favorite.dart';
 import 'package:infs803_group7_frontend/src/share/presentation/widget/adaptive_scaffold_appbar_widget.dart';
@@ -23,13 +24,14 @@ class _MovieListState extends ConsumerState<MovieList> {
     final id = ref.watch(favoriteIdProvider);
     // return Container();
     Widget? floating;
-    if (ref.watch(adminProvider) == false) {
+    if (ref.watch(adminProvider) == true) {
       floating = FloatingActionButton(
         onPressed: () {
           context.pushNamed(
             "movie_add",
           );
         },
+        child: const Icon(Icons.add),
       );
     }
 
@@ -89,9 +91,12 @@ class _MovieListState extends ConsumerState<MovieList> {
                             child: const Text('Modify'),
                           ),
                         if (ref.watch(adminProvider) == true)
-                          TextButton(
+                          ElevatedButton(
                             onPressed: () {
-                              // TODO
+                              data[index].deleted = true;
+                              ref
+                                  .read(movieRepositoryProvider)
+                                  .updateMovie(index, data[index]);
                             },
                             child: const Text('Delete'),
                           ),
@@ -111,7 +116,7 @@ class _MovieListState extends ConsumerState<MovieList> {
                                 overview: data[index].overview,
                                 revenue: data[index].revenue,
                                 score: data[index].score,
-                                // status: data[index].status,
+                                status: data[index].status,
                                 deleted: false,
                               );
 

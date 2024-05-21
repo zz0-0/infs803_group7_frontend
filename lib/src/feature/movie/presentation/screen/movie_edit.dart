@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:infs803_group7_frontend/src/feature/movie/domain/provider/movie_provider.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/presentation/state/movie_state_notifier_provider.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/movie.dart';
 import 'package:infs803_group7_frontend/src/share/presentation/widget/adaptive_scaffold_appbar_widget.dart';
@@ -15,92 +17,161 @@ class MovieEdit extends ConsumerStatefulWidget {
 }
 
 class _MovieEditState extends ConsumerState<MovieEdit> {
+  final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     final movie = ref.watch(movieStateNotifierProvider(widget.id));
 
     return movie.when(
       data: (Movie? data) {
+        final movieNameController = TextEditingController(text: data!.names);
+        final countryController = TextEditingController(text: data.country);
+        final crewController = TextEditingController(text: data.crew);
+        final dateController = TextEditingController(text: data.dateX);
+        final genreController = TextEditingController(text: data.genre);
+        final languageController = TextEditingController(text: data.origLang);
+        final overviewController = TextEditingController(text: data.overview);
+        final revenueController =
+            TextEditingController(text: data.revenue.toString());
+        final scoreController =
+            TextEditingController(text: data.score.toString());
+
         return AdaptiveScaffoldAppbarWidget(
-          title: "Movie Edit",
+          title: "Movie Add",
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: ListView(
               children: [
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        CircleAvatar(
-                          child: Text(
-                            data!.names![0],
+                Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        child: TextFormField(
+                          controller: movieNameController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Movie',
                           ),
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      data.names!,
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "Country: ${data.country!}",
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "Crew: ${data.crew!}",
-                      style: const TextStyle(
-                        fontSize: 24,
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        child: TextFormField(
+                          controller: countryController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Country',
+                          ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "Date: ${data.dateX!}",
-                      style: const TextStyle(
-                        fontSize: 24,
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        child: TextFormField(
+                          controller: crewController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Crews',
+                          ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "Genre: ${data.genre!}",
-                      style: const TextStyle(
-                        fontSize: 24,
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        child: TextFormField(
+                          controller: dateController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Date',
+                          ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "Language: ${data.origLang!}",
-                      style: const TextStyle(
-                        fontSize: 24,
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        child: TextFormField(
+                          controller: genreController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Genre',
+                          ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "Overview: ${data.overview!}",
-                      style: const TextStyle(
-                        fontSize: 24,
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        child: TextFormField(
+                          controller: languageController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Language',
+                          ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "Revenue: ${data.revenue!}",
-                      style: const TextStyle(
-                        fontSize: 24,
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        child: TextFormField(
+                          controller: overviewController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Overview',
+                          ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "Score: ${data.score!}",
-                      style: const TextStyle(
-                        fontSize: 24,
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        child: TextFormField(
+                          controller: revenueController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Revenue Amount',
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        child: TextFormField(
+                          controller: scoreController,
+                          validator: (val) {
+                            if (val == null || val.isEmpty) {
+                              return "Please Enter a Score";
+                            }
+                            if (int.parse(val) < 0 || int.parse(val) > 100) {
+                              return "Score can only be from 0 - 100 ";
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Score Count',
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () {
+                          data.names = movieNameController.text;
+                          data.country = countryController.text;
+                          data.crew = crewController.text;
+                          data.dateX = dateController.text;
+                          data.genre = genreController.text;
+                          data.overview = overviewController.text;
+                          data.revenue = double.parse(revenueController.text);
+                          data.score = int.parse(scoreController.text);
+
+                          ref
+                              .read(movieRepositoryProvider)
+                              .updateMovie(widget.id, data)
+                              .then(
+                            (value) {
+                              ref.refresh(movieListDataSourceProvider);
+                              context.push("/movies");
+                            },
+                          );
+                        },
+                        child: const Text('Submit'),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

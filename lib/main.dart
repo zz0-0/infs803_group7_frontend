@@ -162,7 +162,7 @@ class MyApp extends ConsumerWidget {
                       pageBuilder: (context, state) {
                         return CustomTransitionPage(
                           key: state.pageKey,
-                          child: MovieAdd(
+                          child: const MovieAdd(
                               // id: int.parse(state.pathParameters['movieId']!),
                               ),
                           transitionsBuilder:
@@ -210,8 +210,12 @@ class MyApp extends ConsumerWidget {
                             child: UserEdit(
                               id: int.parse(state.pathParameters['userId']!),
                             ),
-                            transitionsBuilder: (context, animation,
-                                secondaryAnimation, child) {
+                            transitionsBuilder: (
+                              context,
+                              animation,
+                              secondaryAnimation,
+                              child,
+                            ) {
                               return FadeTransition(
                                 opacity: CurveTween(curve: Curves.easeInOutCirc)
                                     .animate(animation),
@@ -230,8 +234,12 @@ class MyApp extends ConsumerWidget {
                             child: UserInfo(
                               id: int.parse(state.pathParameters['userId']!),
                             ),
-                            transitionsBuilder: (context, animation,
-                                secondaryAnimation, child) {
+                            transitionsBuilder: (
+                              context,
+                              animation,
+                              secondaryAnimation,
+                              child,
+                            ) {
                               return FadeTransition(
                                 opacity: CurveTween(curve: Curves.easeInOutCirc)
                                     .animate(animation),
@@ -248,8 +256,12 @@ class MyApp extends ConsumerWidget {
                           return CustomTransitionPage(
                             key: state.pageKey,
                             child: const UserAdd(),
-                            transitionsBuilder: (context, animation,
-                                secondaryAnimation, child) {
+                            transitionsBuilder: (
+                              context,
+                              animation,
+                              secondaryAnimation,
+                              child,
+                            ) {
                               return FadeTransition(
                                 opacity: CurveTween(curve: Curves.easeInOutCirc)
                                     .animate(animation),
@@ -283,6 +295,34 @@ class MyApp extends ConsumerWidget {
                         },
                       );
                     },
+                    routes: [
+                      GoRoute(
+                        path: 'info/:favoriteId',
+                        name: "favorite_info",
+                        pageBuilder: (context, state) {
+                          return CustomTransitionPage(
+                            key: state.pageKey,
+                            child: UserInfo(
+                              id: int.parse(
+                                state.pathParameters['favoriteId']!,
+                              ),
+                            ),
+                            transitionsBuilder: (
+                              context,
+                              animation,
+                              secondaryAnimation,
+                              child,
+                            ) {
+                              return FadeTransition(
+                                opacity: CurveTween(curve: Curves.easeInOutCirc)
+                                    .animate(animation),
+                                child: child,
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),

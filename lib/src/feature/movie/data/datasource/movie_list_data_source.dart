@@ -26,10 +26,14 @@ class MovieListRemoteDataSource implements MovieListDataSource {
     if (result.statusCode == 200) {
       final data = json.decode(result.body) as Map<String, dynamic>;
       final List dataList = data["movies"] as List;
-      return dataList.map((e) {
-        final u = Movie.fromJson(e as Map<String, dynamic>);
-        return u;
-      }).toList();
+
+      return dataList
+          .map((e) {
+            final u = Movie.fromJson(e as Map<String, dynamic>);
+            return u;
+          })
+          .where((e) => e.deleted != true)
+          .toList();
     } else if (result.statusCode == 401) {
       final response = await TokenManager().refreshToken();
       if (response!.statusCode == 200) {

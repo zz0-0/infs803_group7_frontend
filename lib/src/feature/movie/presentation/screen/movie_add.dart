@@ -45,7 +45,7 @@ class MovieAddState extends ConsumerState<MovieAdd> {
                       controller: movieNameController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Movie Name',
+                        labelText: 'Movie',
                       ),
                     ),
                   ),
@@ -55,7 +55,7 @@ class MovieAddState extends ConsumerState<MovieAdd> {
                       controller: countryController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Country Name',
+                        labelText: 'Country',
                       ),
                     ),
                   ),
@@ -65,7 +65,7 @@ class MovieAddState extends ConsumerState<MovieAdd> {
                       controller: crewController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Crew Names',
+                        labelText: 'Crews',
                       ),
                     ),
                   ),
@@ -75,7 +75,7 @@ class MovieAddState extends ConsumerState<MovieAdd> {
                       controller: dateController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Date Name',
+                        labelText: 'Date',
                       ),
                     ),
                   ),
@@ -85,7 +85,7 @@ class MovieAddState extends ConsumerState<MovieAdd> {
                       controller: genreController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Genre Name',
+                        labelText: 'Genre',
                       ),
                     ),
                   ),
@@ -95,7 +95,7 @@ class MovieAddState extends ConsumerState<MovieAdd> {
                       controller: languageController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Language Name',
+                        labelText: 'Language',
                       ),
                     ),
                   ),
@@ -105,7 +105,7 @@ class MovieAddState extends ConsumerState<MovieAdd> {
                       controller: overviewController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'OverviewName',
+                        labelText: 'Overview',
                       ),
                     ),
                   ),

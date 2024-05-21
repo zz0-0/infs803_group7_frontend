@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:infs803_group7_frontend/src/feature/user/domain/provider/user_provider.dart';
 import 'package:infs803_group7_frontend/src/feature/user/presentation/state/user_state_notifier_provider.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/user.dart';
 import 'package:infs803_group7_frontend/src/share/presentation/widget/adaptive_scaffold_appbar_widget.dart';
@@ -24,8 +22,8 @@ class _UserInfoState extends ConsumerState<UserInfo> {
 
     return user.when(
       data: (User? data) {
-        final nameController = TextEditingController(text: data!.name);
-        final usernameController = TextEditingController(text: data.username);
+        // final nameController = TextEditingController(text: data!.name);
+        // final usernameController = TextEditingController(text: data.username);
 
         return AdaptiveScaffoldAppbarWidget(
           title: "User Info",
@@ -34,36 +32,45 @@ class _UserInfoState extends ConsumerState<UserInfo> {
             child: Form(
               key: _formKey,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: Text(
-                      data.name,
+                      "Name: ${data!.name}",
                     ),
                   ),
+                  const SizedBox(height: 8),
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: Text(
-                      data.username,
+                      "Username: ${data.username}",
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      "Level: ${data.username}",
                     ),
                   ),
                   const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () {
-                      data.name = nameController.text;
-                      data.username = usernameController.text;
-                      ref
-                          .read(userRepositoryProvider)
-                          .updateUser(widget.id - 1, data)
-                          .then(
-                        (value) {
-                          ref.refresh(userListStateNotifierProvider);
-                          context.push("/users");
-                        },
-                      );
-                    },
-                    child: const Text('Submit'),
-                  ),
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     data.name = nameController.text;
+                  //     data.username = usernameController.text;
+                  //     ref
+                  //         .read(userRepositoryProvider)
+                  //         .updateUser(widget.id - 1, data)
+                  //         .then(
+                  //       (value) {
+                  //         ref.refresh(userListStateNotifierProvider);
+                  //         context.push("/users");
+                  //       },
+                  //     );
+                  //   },
+                  //   child: const Text('Submit'),
+                  // ),
                 ],
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:infs803_group7_frontend/src/feature/favorite/presentation/state/favorite_state_notifier_provider.dart';
 import 'package:infs803_group7_frontend/src/share/presentation/widget/adaptive_scaffold_appbar_widget.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -41,6 +42,12 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
                       "Rating: ${data[index].score!}",
                       overflow: TextOverflow.ellipsis,
                     ),
+                    onTap: () {
+                      context.pushNamed(
+                        "favorite_info",
+                        pathParameters: {"favoriteId": index.toString()},
+                      );
+                    },
                     trailing: TextButton(
                       onPressed: () {
                         data[index].deleted = true;

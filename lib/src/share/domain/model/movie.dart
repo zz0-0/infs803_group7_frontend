@@ -10,7 +10,8 @@ class Movie {
   String? overview;
   double? revenue;
   int? score;
-  // String? status;
+  bool? deleted;
+  String? status;
 
   Movie({
     this.budgetX,
@@ -24,7 +25,8 @@ class Movie {
     this.overview,
     this.revenue,
     this.score,
-    // this.status,
+    this.deleted,
+    this.status,
   });
 
   Movie.fromJson(Map<String, dynamic> json) {
@@ -39,7 +41,8 @@ class Movie {
     overview = json['overview'] as String;
     revenue = json['revenue'] as double;
     score = json['score'] as int;
-    // status = json['status'] as String;
+    deleted = json['deleted'] as bool;
+    status = json['status'] as String;
   }
 
   Map<String, dynamic> toJson() {
@@ -55,7 +58,8 @@ class Movie {
     data['overview'] = overview;
     data['revenue'] = revenue;
     data['score'] = score;
-    // data['status'] = status;
+    data['deleted'] = deleted;
+    data['status'] = status;
     return data;
   }
 }
