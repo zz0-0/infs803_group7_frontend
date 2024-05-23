@@ -180,7 +180,7 @@ class MyApp extends ConsumerWidget {
                 ),
               ],
             ),
-            if (ref.watch(adminProvider) == true)
+            if (ref.watch(adminFutureProvider).value == true)
               StatefulShellBranch(
                 navigatorKey: _userNavigatorKey,
                 routes: [
@@ -275,7 +275,7 @@ class MyApp extends ConsumerWidget {
                   ),
                 ],
               ),
-            if (ref.watch(adminProvider) == false)
+            if (ref.watch(adminFutureProvider).value == false)
               StatefulShellBranch(
                 navigatorKey: _favoriteNavigatorKey,
                 routes: [

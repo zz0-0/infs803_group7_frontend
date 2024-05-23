@@ -24,7 +24,7 @@ class _MovieListState extends ConsumerState<MovieList> {
     final id = ref.watch(favoriteIdProvider);
     // return Container();
     Widget? floating;
-    if (ref.watch(adminProvider) == true) {
+    if (ref.watch(adminFutureProvider).value == true) {
       floating = FloatingActionButton(
         onPressed: () {
           context.pushNamed(
@@ -45,8 +45,9 @@ class _MovieListState extends ConsumerState<MovieList> {
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 200,
-                childAspectRatio:
-                    ref.watch(adminProvider) == true ? (3 / 3) : (3 / 2.5),
+                childAspectRatio: ref.watch(adminFutureProvider).value == true
+                    ? (3 / 3)
+                    : (3 / 2.5),
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 20,
               ),
@@ -80,7 +81,7 @@ class _MovieListState extends ConsumerState<MovieList> {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        if (ref.watch(adminProvider) == true)
+                        if (ref.watch(adminFutureProvider).value == true)
                           ElevatedButton(
                             onPressed: () {
                               context.pushNamed(
@@ -90,7 +91,7 @@ class _MovieListState extends ConsumerState<MovieList> {
                             },
                             child: const Text('Modify'),
                           ),
-                        if (ref.watch(adminProvider) == true)
+                        if (ref.watch(adminFutureProvider).value == true)
                           ElevatedButton(
                             onPressed: () {
                               data[index].deleted = true;
@@ -100,7 +101,7 @@ class _MovieListState extends ConsumerState<MovieList> {
                             },
                             child: const Text('Delete'),
                           ),
-                        if (ref.watch(adminProvider) == false)
+                        if (ref.watch(adminFutureProvider).value == false)
                           TextButton(
                             child: const Text('Add to favorites'),
                             onPressed: () {
@@ -122,7 +123,22 @@ class _MovieListState extends ConsumerState<MovieList> {
 
                               ref
                                   .read(favoriteRepositoryProvider)
-                                  .createFavorite(id, favorite);
+                                  .createFavorite(id, favorite)
+                                  .whenComplete(
+                                () {
+                                  ref.refresh(
+                                    favoriteListStateNotifierProvider,
+                                  );
+
+                                  const snackBar = SnackBar(
+                                    content: Text(
+                                        'Movie added to the Favorite list'),
+                                  );
+
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                                },
+                              );
                             },
                           ),
                       ],

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:infs803_group7_frontend/global.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/movie.dart';
-import 'package:infs803_group7_frontend/src/share/token/domain/model/token_manager.dart';
+import 'package:infs803_group7_frontend/src/share/domain/model/token_manager.dart';
 
 abstract class MovieDataSource {
   Future<http.Response> createMovie(Movie data);

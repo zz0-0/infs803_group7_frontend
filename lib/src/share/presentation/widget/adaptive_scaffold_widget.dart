@@ -77,13 +77,13 @@ class NavigationSideBar extends ConsumerWidget {
                 selectedIcon: Icon(Icons.favorite),
                 label: Text('Movies'),
               ),
-              if (ref.watch(adminProvider) == true)
+              if (ref.watch(adminFutureProvider).value == true)
                 const NavigationRailDestination(
                   icon: Icon(Icons.bookmark_border),
                   selectedIcon: Icon(Icons.book),
                   label: Text('Users'),
                 ),
-              if (ref.watch(adminProvider) == false)
+              if (ref.watch(adminFutureProvider).value == false)
                 const NavigationRailDestination(
                   icon: Icon(Icons.star_border),
                   selectedIcon: Icon(Icons.star),
@@ -126,13 +126,13 @@ class NavigationBottomBar extends ConsumerWidget {
             activeIcon: Icon(Icons.favorite),
             label: 'Movies',
           ),
-          if (ref.watch(adminProvider) == true)
+          if (ref.watch(adminFutureProvider).value == true)
             const BottomNavigationBarItem(
               icon: Icon(Icons.bookmark_border),
               activeIcon: Icon(Icons.book),
               label: 'Users',
             ),
-          if (ref.watch(adminProvider) == false)
+          if (ref.watch(adminFutureProvider).value == false)
             const BottomNavigationBarItem(
               icon: Icon(Icons.star_border),
               activeIcon: Icon(Icons.star),

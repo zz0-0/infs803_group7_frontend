@@ -55,7 +55,7 @@ class _UserListState extends ConsumerState<UserList> {
                             pathParameters: {"userId": user.id.toString()},
                           );
                         },
-                        child: const Text('Edit'),
+                        child: const Icon(Icons.edit),
                       ),
                       const SizedBox(width: 8),
                       ElevatedButton(
@@ -71,7 +71,7 @@ class _UserListState extends ConsumerState<UserList> {
                                     ref.refresh(userListStateNotifierProvider),
                               );
                         },
-                        child: const Text('Delete'),
+                        child: const Icon(Icons.delete),
                       ),
                     ],
                   ),

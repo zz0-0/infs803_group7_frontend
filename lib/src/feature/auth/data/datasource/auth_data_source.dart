@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:infs803_group7_frontend/global.dart';
+import 'package:infs803_group7_frontend/src/share/domain/model/admin_manager.dart';
 
 abstract class AuthDataSource {
   Future<Response> login(String username, String password);
@@ -56,6 +57,7 @@ class AuthRemoteDataSource implements AuthDataSource {
 
   @override
   Future<bool> logout() async {
+    AdminManager().saveAdminStatus(false);
     return tokenManager.deleteAllToken();
   }
 
