@@ -70,8 +70,14 @@ class MovieRemoteDataSource implements MovieDataSource {
 
   @override
   Future<http.Response> updateMovie(int movieId, Movie data) async {
+    final token = await tokenManager.token;
+
     return http.post(
       Uri.parse("$url/movies/$movieId"),
+      headers: {
+        "Authorization": 'Bearer $token',
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
       body: json.encode(data),
     );
   }

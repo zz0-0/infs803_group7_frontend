@@ -64,8 +64,14 @@ class FavoriteRemoteDataSource implements FavoriteDataSource {
 
   @override
   Future<http.Response> updateFavorite(int favoriteId, Favorite data) async {
+    final token = await tokenManager.token;
+
     return http.post(
       Uri.parse("$url/favorites/$favoriteId"),
+      headers: {
+        "Authorization": 'Bearer $token',
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
       body: json.encode(data),
     );
   }
