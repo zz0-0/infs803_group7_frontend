@@ -5,19 +5,31 @@ import 'package:infs803_group7_frontend/global.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/favorite.dart';
 
 abstract class FavoriteDataSource {
-  Future<http.Response> createFavorite(int favoriteId, Favorite data);
-  Future<Favorite> getFavorite(int favoriteId);
-  Future<http.Response> updateFavorite(int favoriteId, Favorite data);
-  Future<http.Response> deleteFavorite(int favoriteId);
+  Future<http.Response> createFavorite(
+    int userId,
+    int favoriteId,
+    Favorite data,
+  );
+  Future<Favorite> getFavorite(int userId, int favoriteId);
+  Future<http.Response> updateFavorite(
+    int userId,
+    int favoriteId,
+    Favorite data,
+  );
+  Future<http.Response> deleteFavorite(int userId, int favoriteId);
 }
 
 class FavoriteRemoteDataSource implements FavoriteDataSource {
   @override
-  Future<http.Response> createFavorite(int favoriteId, Favorite data) async {
+  Future<http.Response> createFavorite(
+    int userId,
+    int favoriteId,
+    Favorite data,
+  ) async {
     final token = await tokenManager.token;
 
     return http.post(
-      Uri.parse("$url/favorites/$favoriteId"),
+      Uri.parse("$url/favorites/$userId/$favoriteId"),
       headers: {
         "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
@@ -28,11 +40,11 @@ class FavoriteRemoteDataSource implements FavoriteDataSource {
   }
 
   @override
-  Future<http.Response> deleteFavorite(int favoriteId) async {
+  Future<http.Response> deleteFavorite(int userId, int favoriteId) async {
     final token = await tokenManager.token;
 
     return http.delete(
-      Uri.parse("$url/favorites/$favoriteId"),
+      Uri.parse("$url/favorites/$userId/$favoriteId"),
       headers: {
         "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
@@ -42,12 +54,12 @@ class FavoriteRemoteDataSource implements FavoriteDataSource {
   }
 
   @override
-  Future<Favorite> getFavorite(int favoriteId) async {
+  Future<Favorite> getFavorite(int userId, int favoriteId) async {
     final token = await tokenManager.token;
 
     late Favorite favorite;
     final result = await http.get(
-      Uri.parse("$url/favorites/$favoriteId"),
+      Uri.parse("$url/favorites/$userId/$favoriteId"),
       headers: {
         "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
@@ -63,11 +75,15 @@ class FavoriteRemoteDataSource implements FavoriteDataSource {
   }
 
   @override
-  Future<http.Response> updateFavorite(int favoriteId, Favorite data) async {
+  Future<http.Response> updateFavorite(
+    int userId,
+    int favoriteId,
+    Favorite data,
+  ) async {
     final token = await tokenManager.token;
 
-    return http.post(
-      Uri.parse("$url/favorites/$favoriteId"),
+    return http.patch(
+      Uri.parse("$url/favorites/$userId/$favoriteId"),
       headers: {
         "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',

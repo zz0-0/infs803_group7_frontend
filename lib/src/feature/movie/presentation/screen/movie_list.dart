@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:infs803_group7_frontend/src/feature/auth/domain/provider/auth_provider.dart';
+import 'package:infs803_group7_frontend/src/feature/favorite/data/repository/favorite_list_repository.dart';
 import 'package:infs803_group7_frontend/src/feature/favorite/domain/provider/favorite_provider.dart';
 import 'package:infs803_group7_frontend/src/feature/favorite/presentation/state/favorite_state_notifier_provider.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/domain/provider/movie_provider.dart';
 import 'package:infs803_group7_frontend/src/feature/movie/presentation/state/movie_state_notifier_provider.dart';
+import 'package:infs803_group7_frontend/src/feature/user/presentation/state/user_state_notifier_provider.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/favorite.dart';
 import 'package:infs803_group7_frontend/src/share/presentation/widget/adaptive_scaffold_appbar_widget.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -21,7 +23,8 @@ class _MovieListState extends ConsumerState<MovieList> {
   @override
   Widget build(BuildContext context) {
     final value = ref.watch(movieListStateNotifierProvider);
-    final id = ref.watch(favoriteIdProvider);
+    final userId = ref.watch(loginUserIdProvider);
+    final favoriteId = ref.watch(favoriteIdProvider);
     // return Container();
     Widget? floating;
     if (ref.watch(adminFutureProvider).value == true) {
@@ -97,7 +100,12 @@ class _MovieListState extends ConsumerState<MovieList> {
                               data[index].deleted = true;
                               ref
                                   .read(movieRepositoryProvider)
-                                  .updateMovie(index, data[index]);
+                                  .updateMovie(index, data[index])
+                                  .whenComplete(() {
+                                ref.refresh(
+                                  movieListStateNotifierProvider,
+                                );
+                              });
                             },
                             child: const Text('Delete'),
                           ),
@@ -123,16 +131,28 @@ class _MovieListState extends ConsumerState<MovieList> {
 
                               ref
                                   .read(favoriteRepositoryProvider)
-                                  .createFavorite(id, favorite)
+                                  .updateFavorite(userId, favoriteId, favorite)
                                   .whenComplete(
-                                () {
+                                () async {
+                                  final FavoriteListRepository
+                                      favoriteListRepository =
+                                      ref.watch(favoriteListRepositoryProvider);
+                                  final favorites = await favoriteListRepository
+                                      .getFavoriteList(userId);
+
+                                  if (favorites.isNotEmpty) {
+                                    ref
+                                        .read(favoriteIdProvider.notifier)
+                                        .update((state) => favorites.length);
+                                  }
                                   ref.refresh(
-                                    favoriteListStateNotifierProvider,
+                                    favoriteListStateNotifierProvider(userId),
                                   );
 
                                   const snackBar = SnackBar(
                                     content: Text(
-                                        'Movie added to the Favorite list'),
+                                      'Movie added to the Favorite list',
+                                    ),
                                   );
 
                                   ScaffoldMessenger.of(context)

@@ -6,16 +6,16 @@ import 'package:infs803_group7_frontend/src/share/domain/model/favorite.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/token_manager.dart';
 
 abstract class FavoriteListDataSource {
-  Future<List<Favorite>> getFavoriteList();
+  Future<List<Favorite>> getFavoriteList(int userId);
 }
 
 class FavoriteListRemoteDataSource implements FavoriteListDataSource {
   @override
-  Future<List<Favorite>> getFavoriteList() async {
+  Future<List<Favorite>> getFavoriteList(int userId) async {
     final token = await tokenManager.token;
 
     final result = await http.get(
-      Uri.parse("$url/favorites"),
+      Uri.parse("$url/favorites/$userId"),
       headers: {
         "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
@@ -35,7 +35,7 @@ class FavoriteListRemoteDataSource implements FavoriteListDataSource {
     } else if (result.statusCode == 401) {
       final response = await TokenManager().refreshToken();
       if (response!.statusCode == 200) {
-        getFavoriteList();
+        getFavoriteList(userId);
       }
     }
     return movie;

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart';
 import 'package:infs803_group7_frontend/src/feature/auth/data/repository/auth_repository.dart';
 import 'package:infs803_group7_frontend/src/feature/auth/domain/provider/auth_provider.dart';
+import 'package:infs803_group7_frontend/src/feature/user/presentation/state/user_state_notifier_provider.dart';
 import 'package:infs803_group7_frontend/src/share/domain/model/admin_manager.dart';
 
 class AuthStateNotifier extends StateNotifier<AsyncValue<Response>> {
@@ -21,6 +22,10 @@ class AuthStateNotifier extends StateNotifier<AsyncValue<Response>> {
       if (state.value!.statusCode == 200) {
         final data =
             await json.decode(state.value!.body) as Map<String, dynamic>;
+        print(data);
+        ref
+            .read(loginUserIdProvider.notifier)
+            .update((state) => int.parse(data["id"].toString()));
         if (int.parse(data["level"].toString()) > 1) {
           // ref.read(adminFutureProvider.future).state = true;
           await AdminManager().saveAdminStatus(true);
@@ -43,6 +48,9 @@ class AuthStateNotifier extends StateNotifier<AsyncValue<Response>> {
       if (state.value!.statusCode == 200) {
         final data =
             await json.decode(state.value!.body) as Map<String, dynamic>;
+        ref
+            .read(loginUserIdProvider.notifier)
+            .update((state) => int.parse(data["id"] as String));
         if (int.parse(data["level"].toString()) > 1) {
           // ref.read(adminProvider.notifier).state = true;
           await AdminManager().saveAdminStatus(true);

@@ -35,6 +35,11 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    bool value = false;
+    ref.watch(adminFutureProvider).whenData((v) async {
+      value = v;
+    });
+
     final router = GoRouter(
       initialLocation: "/",
       navigatorKey: _rootNavigatorKey,
@@ -180,7 +185,7 @@ class MyApp extends ConsumerWidget {
                 ),
               ],
             ),
-            if (ref.watch(adminFutureProvider).value == true)
+            if (value == true)
               StatefulShellBranch(
                 navigatorKey: _userNavigatorKey,
                 routes: [
@@ -275,7 +280,7 @@ class MyApp extends ConsumerWidget {
                   ),
                 ],
               ),
-            if (ref.watch(adminFutureProvider).value == false)
+            if (value == false)
               StatefulShellBranch(
                 navigatorKey: _favoriteNavigatorKey,
                 routes: [

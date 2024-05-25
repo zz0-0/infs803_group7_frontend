@@ -20,6 +20,6 @@ final authRepositoryProvider = Provider(
 
 // Use FutureProvider to handle async initialization
 final adminFutureProvider = FutureProvider<bool>((ref) async {
-  bool isAdmin = await AdminManager().getAdminStatus();
+  final bool isAdmin = await AdminManager().getAdminStatus();
   return isAdmin;
 });

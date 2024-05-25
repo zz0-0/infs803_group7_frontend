@@ -24,6 +24,10 @@ class MovieAddState extends ConsumerState<MovieAdd> {
   final overviewController = TextEditingController();
   final revenueController = TextEditingController();
   final scoreController = TextEditingController();
+  final budgetController = TextEditingController();
+  final originTitleController = TextEditingController();
+  final originLanguageController = TextEditingController();
+  final statusController = TextEditingController();
 
   Movie movie = Movie();
 
@@ -138,6 +142,56 @@ class MovieAddState extends ConsumerState<MovieAdd> {
                       ),
                     ),
                   ),
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    child: TextFormField(
+                      controller: revenueController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Revenue Amount',
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    child: TextFormField(
+                      controller: budgetController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Budget Amount',
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    child: TextFormField(
+                      controller: originLanguageController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Origin Language',
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    child: TextFormField(
+                      controller: originTitleController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Origin Title',
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    child: TextFormField(
+                      controller: scoreController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Status',
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
@@ -149,6 +203,11 @@ class MovieAddState extends ConsumerState<MovieAdd> {
                       movie.overview = overviewController.text;
                       movie.revenue = double.parse(revenueController.text);
                       movie.score = int.parse(scoreController.text);
+                      movie.budgetX = double.parse(budgetController.text);
+                      movie.deleted = false;
+                      movie.origLang = originLanguageController.text;
+                      movie.origTitle = originTitleController.text;
+                      movie.status = statusController.text;
 
                       ref
                           .read(movieRepositoryProvider)

@@ -14,3 +14,4 @@ final userStateNotifierProvider =
 });
 
 final userIdProvider = StateProvider((ref) => 0);
+final loginUserIdProvider = StateProvider((ref) => 0);

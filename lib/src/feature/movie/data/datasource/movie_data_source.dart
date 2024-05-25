@@ -72,7 +72,7 @@ class MovieRemoteDataSource implements MovieDataSource {
   Future<http.Response> updateMovie(int movieId, Movie data) async {
     final token = await tokenManager.token;
 
-    return http.post(
+    return http.patch(
       Uri.parse("$url/movies/$movieId"),
       headers: {
         "Authorization": 'Bearer $token',

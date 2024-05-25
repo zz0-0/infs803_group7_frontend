@@ -8,15 +8,16 @@ import 'package:infs803_group7_frontend/src/share/domain/model/favorite.dart';
 class FavoriteListStateNotifier
     extends StateNotifier<AsyncValue<List<Favorite>>> {
   final Ref ref;
+  final int id;
 
-  FavoriteListStateNotifier(this.ref) : super(const AsyncLoading()) {
+  FavoriteListStateNotifier(this.ref, this.id) : super(const AsyncLoading()) {
     getFavioriteList();
   }
 
   Future<void> getFavioriteList() async {
     final FavoriteListRepository favoriteListRepository =
         ref.watch(favoriteListRepositoryProvider);
-    final users = await favoriteListRepository.getFavoriteList();
+    final users = await favoriteListRepository.getFavoriteList(id);
 
     state = await AsyncValue.guard(() => Future(() => users));
   }
@@ -24,22 +25,27 @@ class FavoriteListStateNotifier
 
 class FavoriteStateNotifier extends StateNotifier<AsyncValue<Favorite>> {
   final Ref ref;
-  final int id;
+  final int favoriteId;
 
-  FavoriteStateNotifier(this.ref, this.id) : super(const AsyncLoading());
+  FavoriteStateNotifier(this.ref, this.favoriteId)
+      : super(const AsyncLoading());
 
-  Future<void> getFaviorite() async {
+  Future<void> getFaviorite(int userId) async {
     final FavoriteRepository favoriteRepository =
         ref.watch(favoriteRepositoryProvider);
-    final users = await favoriteRepository.getFavorite(id);
+    final users = await favoriteRepository.getFavorite(userId, favoriteId);
 
     state = await AsyncValue.guard(() => Future(() => users));
   }
 
-  Future<Response> deleteFavorite(Favorite favorite) async {
+  Future<Response> deleteFavorite(int userId, Favorite favorite) async {
     final FavoriteRepository favoriteRepository =
         ref.watch(favoriteRepositoryProvider);
-    return await favoriteRepository.updateFavorite(id, favorite);
+    return await favoriteRepository.updateFavorite(
+      userId,
+      favoriteId,
+      favorite,
+    );
 
     // state = await AsyncValue.guard(() => Future(() => users));
   }

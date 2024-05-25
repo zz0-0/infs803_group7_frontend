@@ -2,7 +2,7 @@ import 'package:infs803_group7_frontend/src/feature/favorite/data/datasource/fav
 import 'package:infs803_group7_frontend/src/share/domain/model/favorite.dart';
 
 abstract class FavoriteListRepository {
-  Future<List<Favorite>> getFavoriteList();
+  Future<List<Favorite>> getFavoriteList(int userId);
 }
 
 class FavoriteListRepositoryImpl extends FavoriteListRepository {
@@ -11,7 +11,7 @@ class FavoriteListRepositoryImpl extends FavoriteListRepository {
   FavoriteListRepositoryImpl(this.favoriteListDataSource);
 
   @override
-  Future<List<Favorite>> getFavoriteList() {
-    return favoriteListDataSource.getFavoriteList();
+  Future<List<Favorite>> getFavoriteList(int userId) {
+    return favoriteListDataSource.getFavoriteList(userId);
   }
 }
