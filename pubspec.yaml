@@ -42,6 +42,7 @@ dependencies:
   http: ^1.2.1
   layout: ^1.0.5
   loading_animation_widget: ^1.2.1
+  restart_app: ^1.2.1
   riverpod_annotation: ^2.3.3
   shared_preferences: ^2.2.3
   tmdb_api: ^2.2.0

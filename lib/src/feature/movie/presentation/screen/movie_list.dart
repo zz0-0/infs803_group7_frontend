@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:infs803_group7_frontend/src/feature/auth/domain/provider/auth_provider.dart';
+import 'package:infs803_group7_frontend/src/feature/auth/presentation/state/auth_state_notifier_provider.dart';
 import 'package:infs803_group7_frontend/src/feature/favorite/data/repository/favorite_list_repository.dart';
 import 'package:infs803_group7_frontend/src/feature/favorite/domain/provider/favorite_provider.dart';
 import 'package:infs803_group7_frontend/src/feature/favorite/presentation/state/favorite_state_notifier_provider.dart';
@@ -27,7 +27,14 @@ class _MovieListState extends ConsumerState<MovieList> {
     final favoriteId = ref.watch(favoriteIdProvider);
     // return Container();
     Widget? floating;
-    if (ref.watch(adminFutureProvider).value == true) {
+
+    // final isAdmin = ref.read(adminFutureProvider).maybeWhen(
+    //       data: (value) => value,
+    //       orElse: () => false,
+    //     );
+    final isAdmin = ref.read(adminNotifierProvider);
+
+    if (isAdmin == true) {
       floating = FloatingActionButton(
         onPressed: () {
           context.pushNamed(
@@ -48,9 +55,7 @@ class _MovieListState extends ConsumerState<MovieList> {
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 200,
-                childAspectRatio: ref.watch(adminFutureProvider).value == true
-                    ? (3 / 3)
-                    : (3 / 2.5),
+                childAspectRatio: isAdmin == true ? (3 / 3) : (3 / 2.5),
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 20,
               ),
@@ -84,7 +89,7 @@ class _MovieListState extends ConsumerState<MovieList> {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        if (ref.watch(adminFutureProvider).value == true)
+                        if (isAdmin == true)
                           ElevatedButton(
                             onPressed: () {
                               context.pushNamed(
@@ -94,7 +99,7 @@ class _MovieListState extends ConsumerState<MovieList> {
                             },
                             child: const Text('Modify'),
                           ),
-                        if (ref.watch(adminFutureProvider).value == true)
+                        if (isAdmin == true)
                           ElevatedButton(
                             onPressed: () {
                               data[index].deleted = true;
@@ -109,7 +114,7 @@ class _MovieListState extends ConsumerState<MovieList> {
                             },
                             child: const Text('Delete'),
                           ),
-                        if (ref.watch(adminFutureProvider).value == false)
+                        if (isAdmin == false)
                           TextButton(
                             child: const Text('Add to favorites'),
                             onPressed: () {

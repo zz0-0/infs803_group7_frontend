@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:infs803_group7_frontend/main.dart';
 import 'package:infs803_group7_frontend/src/feature/auth/presentation/state/auth_state_notifier_provider.dart';
 import 'package:infs803_group7_frontend/src/share/presentation/widget/adaptive_scaffold_appbar_widget.dart';
 
@@ -61,9 +64,32 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       .read(authStateNotifierProvider.notifier)
                       .login(usernameController.text, passwordController.text)
                       .then(
-                    (value) {
+                    (value) async {
                       if (value.statusCode == 200) {
-                        context.go("/movies");
+                        final data = await json.decode(value.body)
+                            as Map<String, dynamic>;
+
+                        if (int.parse(data["level"].toString()) > 1) {
+                          final isAdmin = ref
+                              .read(adminNotifierProvider.notifier)
+                              .setAdminStatus(true);
+
+                          isAdmin.then((value) {
+                            ref.read(adminNotifierProvider);
+                            MyApp.resetRoute(context);
+                          });
+                        } else {
+                          final isAdmin = ref
+                              .read(adminNotifierProvider.notifier)
+                              .setAdminStatus(false);
+
+                          isAdmin.then((value) {
+                            ref.read(adminNotifierProvider);
+                            MyApp.resetRoute(context);
+                          });
+                        }
+
+                        context.go("/");
                       } else {
                         const snackBar = SnackBar(
                           content: Text("Incorrent username or password"),

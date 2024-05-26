@@ -58,6 +58,7 @@ class AuthRemoteDataSource implements AuthDataSource {
   @override
   Future<bool> logout() async {
     AdminManager().saveAdminStatus(false);
+
     return tokenManager.deleteAllToken();
   }
 

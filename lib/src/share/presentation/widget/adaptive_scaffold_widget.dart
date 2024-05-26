@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:infs803_group7_frontend/src/feature/auth/domain/provider/auth_provider.dart';
+import 'package:infs803_group7_frontend/src/feature/auth/presentation/state/auth_state_notifier_provider.dart';
 import 'package:layout/layout.dart';
 
 class AdaptiveScaffoldWidget extends ConsumerStatefulWidget {
@@ -64,6 +64,13 @@ class NavigationSideBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // final isAdmin = ref.read(adminFutureProvider).maybeWhen(
+    //       data: (value) => value,
+    //       orElse: () => false,
+    //     );
+
+    final value = ref.read(adminNotifierProvider);
+
     return Scaffold(
       body: Row(
         children: [
@@ -77,13 +84,13 @@ class NavigationSideBar extends ConsumerWidget {
                 selectedIcon: Icon(Icons.favorite),
                 label: Text('Movies'),
               ),
-              if (ref.watch(adminFutureProvider).value == true)
+              if (value == true)
                 const NavigationRailDestination(
                   icon: Icon(Icons.bookmark_border),
                   selectedIcon: Icon(Icons.book),
                   label: Text('Users'),
                 ),
-              if (ref.watch(adminFutureProvider).value == false)
+              if (value == false)
                 const NavigationRailDestination(
                   icon: Icon(Icons.star_border),
                   selectedIcon: Icon(Icons.star),
@@ -115,6 +122,12 @@ class NavigationBottomBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // final isAdmin = ref.read(adminFutureProvider).maybeWhen(
+    //       data: (value) => value,
+    //       orElse: () => false,
+    //     );
+    final value = ref.read(adminNotifierProvider);
+
     return Scaffold(
       body: body,
       bottomNavigationBar: BottomNavigationBar(
@@ -126,13 +139,13 @@ class NavigationBottomBar extends ConsumerWidget {
             activeIcon: Icon(Icons.favorite),
             label: 'Movies',
           ),
-          if (ref.watch(adminFutureProvider).value == true)
+          if (value == true)
             const BottomNavigationBarItem(
               icon: Icon(Icons.bookmark_border),
               activeIcon: Icon(Icons.book),
               label: 'Users',
             ),
-          if (ref.watch(adminFutureProvider).value == false)
+          if (value == false)
             const BottomNavigationBarItem(
               icon: Icon(Icons.star_border),
               activeIcon: Icon(Icons.star),

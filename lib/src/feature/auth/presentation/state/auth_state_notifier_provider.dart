@@ -13,3 +13,7 @@ final authStateNotifierProvider =
 //     return authRepository.login(username, password);
 //   },
 // );
+
+final adminNotifierProvider = StateNotifierProvider<AdminNotifier, bool>((ref) {
+  return AdminNotifier();
+});

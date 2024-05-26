@@ -22,14 +22,9 @@ class AuthStateNotifier extends StateNotifier<AsyncValue<Response>> {
       if (state.value!.statusCode == 200) {
         final data =
             await json.decode(state.value!.body) as Map<String, dynamic>;
-        print(data);
         ref
             .read(loginUserIdProvider.notifier)
             .update((state) => int.parse(data["id"].toString()));
-        if (int.parse(data["level"].toString()) > 1) {
-          // ref.read(adminFutureProvider.future).state = true;
-          await AdminManager().saveAdminStatus(true);
-        }
       }
     }
     return result;
@@ -66,5 +61,20 @@ class AuthStateNotifier extends StateNotifier<AsyncValue<Response>> {
     final result = authRepository.forget(username, email);
     state = await AsyncValue.guard(() => result);
     return result;
+  }
+}
+
+class AdminNotifier extends StateNotifier<bool> {
+  AdminNotifier() : super(false) {
+    _loadAdminStatus();
+  }
+
+  Future<void> _loadAdminStatus() async {
+    state = await AdminManager().getAdminStatus();
+  }
+
+  Future<void> setAdminStatus(bool isAdmin) async {
+    await AdminManager().saveAdminStatus(isAdmin);
+    state = isAdmin;
   }
 }
